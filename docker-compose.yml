@@ -95,5 +95,79 @@ services:
       kafka:              { condition: service_healthy }
       compliance-service: { condition: service_healthy }
 
+  registry-service:
+    build:
+      context: .
+      dockerfile: services/registry-service/Dockerfile
+    ports: ["8081:8081"]
+    environment:
+      DB_HOST:       postgres
+      DB_USER:       asd
+      DB_PASS:       asd
+      KAFKA_SERVERS: kafka:29092
+    depends_on:
+      postgres: { condition: service_healthy }
+      kafka:    { condition: service_healthy }
+
+  identity-service:
+    build:
+      context: .
+      dockerfile: services/identity-service/Dockerfile
+    ports: ["8082:8082"]
+    environment:
+      DB_HOST:       postgres
+      DB_USER:       asd
+      DB_PASS:       asd
+      KAFKA_SERVERS: kafka:29092
+    depends_on:
+      postgres: { condition: service_healthy }
+      kafka:    { condition: service_healthy }
+
+  membership-service:
+    build:
+      context: .
+      dockerfile: services/membership-service/Dockerfile
+    ports: ["8083:8083"]
+    environment:
+      DB_HOST:              postgres
+      DB_USER:              asd
+      DB_PASS:              asd
+      KAFKA_SERVERS:        kafka:29092
+      IDENTITY_SERVICE_URL: http://identity-service:8082
+      REGISTRY_SERVICE_URL: http://registry-service:8081
+    depends_on:
+      postgres:         { condition: service_healthy }
+      kafka:            { condition: service_healthy }
+      registry-service: { condition: service_started }
+      identity-service: { condition: service_started }
+
+  scheduling-service:
+    build:
+      context: .
+      dockerfile: services/scheduling-service/Dockerfile
+    ports: ["8084:8084"]
+    environment:
+      DB_HOST:       postgres
+      DB_USER:       asd
+      DB_PASS:       asd
+      KAFKA_SERVERS: kafka:29092
+    depends_on:
+      postgres: { condition: service_healthy }
+      kafka:    { condition: service_healthy }
+
+  finance-service:
+    build:
+      context: .
+      dockerfile: services/finance-service/Dockerfile
+    ports: ["8087:8087"]
+    environment:
+      DB_HOST:       postgres
+      DB_USER:       asd
+      DB_PASS:       asd
+      KAFKA_SERVERS: kafka:29092
+    depends_on:
+      postgres: { condition: service_healthy }
+      kafka:    { condition: service_healthy }
+
 volumes:
   postgres_data:

@@ -5,7 +5,7 @@ import it.asd.compliance.shared.entity.DocumentEntity;
 import it.asd.compliance.shared.entity.DocumentStatus;
 import it.asd.compliance.shared.repository.DocumentRepository;
 import it.asd.events.KafkaTopics;
-import it.asd.events.compliance.DocumentExpiredEvent;
+import it.asd.events.compliance.DocumentCreatedEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -64,10 +64,9 @@ public class UploadDocumentHandler {
         // Publish creation event (Finance and others may listen)
         eventPublisher.publish(
                 KafkaTopics.DOCUMENT_CREATED,
-                new DocumentExpiredEvent(   // reuse shape — TODO: add DocumentCreatedEvent
-                        UUID.randomUUID(), saved.getPersonId(), saved.getAsdId(),
-                        saved.getId(), saved.getTipo().name(),
-                        saved.getDataScadenza(), Instant.now()),
+                new DocumentCreatedEvent(
+                        UUID.randomUUID(), saved.getId(), saved.getPersonId(), saved.getAsdId(),
+                        saved.getTipo().name(), saved.getDataScadenza(), Instant.now()),
                 saved.getAsdId(), null);
 
         return new UploadDocumentResult.Success(

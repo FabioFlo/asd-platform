@@ -14,10 +14,15 @@
           <entry name="$MAVEN_REPOSITORY$/org/mapstruct/mapstruct-processor/1.6.3/mapstruct-processor-1.6.3.jar" />
           <entry name="$MAVEN_REPOSITORY$/org/mapstruct/mapstruct/1.6.3/mapstruct-1.6.3.jar" />
         </processorPath>
-        <module name="asd-common" />
         <module name="asd-events" />
+        <module name="finance-service" />
+        <module name="registry-service" />
+        <module name="asd-common" />
         <module name="competition-service" />
+        <module name="scheduling-service" />
         <module name="compliance-service" />
+        <module name="identity-service" />
+        <module name="membership-service" />
       </profile>
     </annotationProcessing>
   </component>
@@ -27,6 +32,11 @@
       <module name="asd-events" options="-parameters -Amapstruct.defaultComponentModel=spring -Amapstruct.unmappedTargetPolicy=ERROR" />
       <module name="competition-service" options="-parameters -Amapstruct.defaultComponentModel=spring -Amapstruct.unmappedTargetPolicy=ERROR" />
       <module name="compliance-service" options="-parameters -Amapstruct.defaultComponentModel=spring -Amapstruct.unmappedTargetPolicy=ERROR" />
+      <module name="finance-service" options="-parameters -Amapstruct.defaultComponentModel=spring -Amapstruct.unmappedTargetPolicy=ERROR" />
+      <module name="identity-service" options="-parameters -Amapstruct.defaultComponentModel=spring -Amapstruct.unmappedTargetPolicy=ERROR" />
+      <module name="membership-service" options="-parameters -Amapstruct.defaultComponentModel=spring -Amapstruct.unmappedTargetPolicy=ERROR" />
+      <module name="registry-service" options="-parameters -Amapstruct.defaultComponentModel=spring -Amapstruct.unmappedTargetPolicy=ERROR" />
+      <module name="scheduling-service" options="-parameters -Amapstruct.defaultComponentModel=spring -Amapstruct.unmappedTargetPolicy=ERROR" />
     </option>
   </component>
 </project>

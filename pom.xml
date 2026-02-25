@@ -44,7 +44,11 @@
     <module>shared/asd-common</module>
     <module>services/compliance-service</module>
     <module>services/competition-service</module>
-    <!-- other services follow the same pattern -->
+    <module>services/registry-service</module>
+    <module>services/identity-service</module>
+    <module>services/membership-service</module>
+    <module>services/scheduling-service</module>
+    <module>services/finance-service</module>
   </modules>
 
   <dependencyManagement>

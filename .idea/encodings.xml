@@ -5,6 +5,16 @@
     <file url="file://$PROJECT_DIR$/services/competition-service/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/services/compliance-service/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/services/compliance-service/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/services/finance-service/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/services/finance-service/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/services/identity-service/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/services/identity-service/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/services/membership-service/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/services/membership-service/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/services/registry-service/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/services/registry-service/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/services/scheduling-service/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/services/scheduling-service/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/shared/asd-common/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/shared/asd-common/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/shared/asd-events/src/main/java" charset="UTF-8" />

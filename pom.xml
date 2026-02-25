@@ -26,7 +26,7 @@
       Do NOT use on records, DTOs, commands, results, or event classes.
       Modern Java 25 records replace @Data, @Value, @RequiredArgsConstructor.
     -->
-    <lombok.version>1.18.36</lombok.version>
+    <lombok.version>1.18.42</lombok.version>
 
     <!--
       MapStruct: ONLY for non-trivial entity ↔ DTO mappings

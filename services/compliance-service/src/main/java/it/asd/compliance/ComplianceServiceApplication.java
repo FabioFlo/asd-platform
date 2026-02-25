@@ -7,7 +7,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @SpringBootApplication(scanBasePackages = {"it.asd.compliance", "it.asd.common"})
 @EnableScheduling
 public class ComplianceServiceApplication {
-    public static void main(String[] args) {
+    static void main(String[] args) {
         SpringApplication.run(ComplianceServiceApplication.class, args);
     }
 }

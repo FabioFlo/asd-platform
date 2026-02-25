@@ -13,7 +13,7 @@ CREATE TABLE person (
     telefono                 VARCHAR(20),
     indirizzo                VARCHAR(255),
     citta                    VARCHAR(100),
-    provincia                CHAR(2),
+    provincia                VARCHAR(100),
     cap                      VARCHAR(10),
     stato                    person_status_enum NOT NULL DEFAULT 'ACTIVE',
     created_at               TIMESTAMPTZ NOT NULL DEFAULT NOW(),

@@ -8,8 +8,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-import java.net.URI;
-import java.time.Instant;
+import java.util.Map;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
@@ -18,39 +17,37 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(ResourceNotFoundException.class)
     public ProblemDetail handleNotFound(ResourceNotFoundException ex) {
-        var pd = ProblemDetail.forStatusAndDetail(HttpStatus.NOT_FOUND, ex.getMessage());
-        pd.setType(URI.create("https://asd.it/errors/not-found"));
-        pd.setProperty("timestamp", Instant.now());
-        return pd;
+        return ApiErrors.of(HttpStatus.NOT_FOUND, ApiErrors.NOT_FOUND, ex.getMessage());
     }
 
     @ExceptionHandler(BusinessRuleViolationException.class)
     public ProblemDetail handleBusinessRule(BusinessRuleViolationException ex) {
-        var pd = ProblemDetail.forStatusAndDetail(HttpStatus.UNPROCESSABLE_ENTITY, ex.getMessage());
-        pd.setType(URI.create("https://asd.it/errors/business-rule-violation"));
-        pd.setProperty("rule", ex.getRule());
-        pd.setProperty("timestamp", Instant.now());
-        return pd;
+        return ApiErrors.of(
+                HttpStatus.UNPROCESSABLE_ENTITY,
+                ApiErrors.BUSINESS_RULE_VIOLATION,
+                ex.getMessage(),
+                Map.of("rule", ex.getRule()));
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ProblemDetail handleValidation(MethodArgumentNotValidException ex) {
-        var pd = ProblemDetail.forStatus(HttpStatus.BAD_REQUEST);
-        pd.setType(URI.create("https://asd.it/errors/validation"));
-        pd.setDetail("Validation failed");
-        pd.setProperty("fields", ex.getBindingResult().getFieldErrors()
-                .stream().map(f -> f.getField() + ": " + f.getDefaultMessage()).toList());
-        pd.setProperty("timestamp", Instant.now());
-        return pd;
+        var fields = ex.getBindingResult().getFieldErrors()
+                .stream()
+                .map(f -> f.getField() + ": " + f.getDefaultMessage())
+                .toList();
+        return ApiErrors.of(
+                HttpStatus.BAD_REQUEST,
+                ApiErrors.VALIDATION_FAILED,
+                "Validation failed",
+                Map.of("fields", fields));
     }
 
     @ExceptionHandler(Exception.class)
     public ProblemDetail handleGeneric(Exception ex) {
         log.error("Unhandled exception", ex);
-        var pd = ProblemDetail.forStatusAndDetail(
-                HttpStatus.INTERNAL_SERVER_ERROR, "An unexpected error occurred");
-        pd.setType(URI.create("https://asd.it/errors/internal"));
-        pd.setProperty("timestamp", Instant.now());
-        return pd;
+        return ApiErrors.of(
+                HttpStatus.INTERNAL_SERVER_ERROR,
+                ApiErrors.INTERNAL_ERROR,
+                "An unexpected error occurred");
     }
 }

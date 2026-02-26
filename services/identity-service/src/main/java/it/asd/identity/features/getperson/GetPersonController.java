@@ -1,11 +1,14 @@
 package it.asd.identity.features.getperson;
 
+import it.asd.common.exception.ApiErrors;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ProblemDetail;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-import java.net.URI;
 import java.util.UUID;
 
 @RestController
@@ -24,10 +27,8 @@ public class GetPersonController {
             case GetPersonResult.Found f -> ResponseEntity.ok(f.response());
 
             case GetPersonResult.NotFound n -> {
-                var pd = ProblemDetail.forStatus(HttpStatus.NOT_FOUND);
-                pd.setType(URI.create("https://asd.it/errors/person-not-found"));
-                pd.setDetail("Person not found: " + n.personId());
-                yield ResponseEntity.status(HttpStatus.NOT_FOUND).body(pd);
+                ProblemDetail problemDetail = ApiErrors.of(HttpStatus.NOT_FOUND, ApiErrors.PERSON_NOT_FOUND, "Person not found: " + n.personId());
+                yield ResponseEntity.status(HttpStatus.NOT_FOUND).body(problemDetail);
             }
         };
     }

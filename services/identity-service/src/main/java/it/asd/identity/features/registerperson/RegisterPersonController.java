@@ -1,12 +1,14 @@
 package it.asd.identity.features.registerperson;
 
+import it.asd.common.exception.ApiErrors;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ProblemDetail;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
-import java.net.URI;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/identity/persons")
@@ -27,17 +29,13 @@ public class RegisterPersonController {
                             cmd.nome(), cmd.cognome(), cmd.dataNascita(), cmd.email(), "ACTIVE"));
 
             case RegisterPersonResult.DuplicateCodiceFiscale d -> {
-                var pd = ProblemDetail.forStatus(HttpStatus.UNPROCESSABLE_ENTITY);
-                pd.setType(URI.create("https://asd.it/errors/duplicate-codice-fiscale"));
-                pd.setDetail("Codice fiscale already registered: " + d.cf());
-                yield ResponseEntity.unprocessableEntity().body(pd);
+                ProblemDetail problemDetail = ApiErrors.of(HttpStatus.UNPROCESSABLE_ENTITY, ApiErrors.ALREADY_REGISTERED, "Codice fiscale already registered: " + d.cf());
+                yield ResponseEntity.unprocessableEntity().body(problemDetail);
             }
 
             case RegisterPersonResult.DuplicateEmail e -> {
-                var pd = ProblemDetail.forStatus(HttpStatus.UNPROCESSABLE_ENTITY);
-                pd.setType(URI.create("https://asd.it/errors/duplicate-email"));
-                pd.setDetail("Email already registered: " + e.email());
-                yield ResponseEntity.unprocessableEntity().body(pd);
+                ProblemDetail problemDetail = ApiErrors.of(HttpStatus.UNPROCESSABLE_ENTITY, ApiErrors.DUPLICATE_EMAIL, "Email already registered: " + e.email());
+                yield ResponseEntity.unprocessableEntity().body(problemDetail);
             }
         };
     }

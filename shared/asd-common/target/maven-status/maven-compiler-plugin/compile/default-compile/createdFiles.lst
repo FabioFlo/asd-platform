@@ -1,3 +1,4 @@
+it\asd\common\exception\ApiErrors.class
 it\asd\common\exception\ResourceNotFoundException.class
 it\asd\common\exception\BusinessRuleViolationException.class
 it\asd\common\kafka\KafkaConfig.class

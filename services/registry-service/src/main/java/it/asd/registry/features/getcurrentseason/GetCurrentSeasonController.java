@@ -1,11 +1,14 @@
 package it.asd.registry.features.getcurrentseason;
 
+import it.asd.common.exception.ApiErrors;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ProblemDetail;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-import java.net.URI;
 import java.util.UUID;
 
 @RestController
@@ -25,11 +28,9 @@ public class GetCurrentSeasonController {
                     new CurrentSeasonResponse(f.seasonId(), asdId, f.codice(),
                             f.dataInizio(), f.dataFine()));
 
-            case GetCurrentSeasonResult.NoActiveSeason n -> {
-                var pd = ProblemDetail.forStatus(HttpStatus.NOT_FOUND);
-                pd.setType(URI.create("https://asd.it/errors/no-active-season"));
-                pd.setDetail("No active season for ASD: " + n.asdId());
-                yield ResponseEntity.status(HttpStatus.NOT_FOUND).body(pd);
+            case GetCurrentSeasonResult.NoActiveSeason _ -> {
+                ProblemDetail problemDetail = ApiErrors.of(HttpStatus.NOT_FOUND, ApiErrors.DUPLICATE_CODICE_FISCALE, "No active season for ASD: " + asdId);
+                yield ResponseEntity.status(HttpStatus.NOT_FOUND).body(problemDetail);
             }
         };
     }

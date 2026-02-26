@@ -1,12 +1,12 @@
 package it.asd.membership.features.addtogroup;
 
+import it.asd.common.exception.ApiErrors;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ProblemDetail;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.net.URI;
 import java.util.UUID;
 
 @RestController
@@ -33,24 +33,18 @@ public class AddToGroupController {
                     .body(new EnrollmentResponse(a.enrollmentId(), groupId, cmd.personId()));
 
             case AddToGroupResult.GroupNotFound g -> {
-                var pd = ProblemDetail.forStatus(HttpStatus.NOT_FOUND);
-                pd.setType(URI.create("https://asd.it/errors/group-not-found"));
-                pd.setDetail("Group not found: " + g.groupId());
-                yield ResponseEntity.status(HttpStatus.NOT_FOUND).body(pd);
+                ProblemDetail problemDetail = ApiErrors.of(HttpStatus.NOT_FOUND, ApiErrors.GROUP_NOT_FOUND, "Group not found: " + g.groupId());
+                yield ResponseEntity.status(HttpStatus.NOT_FOUND).body(problemDetail);
             }
 
             case AddToGroupResult.NotAMember n -> {
-                var pd = ProblemDetail.forStatus(HttpStatus.UNPROCESSABLE_ENTITY);
-                pd.setType(URI.create("https://asd.it/errors/not-a-member"));
-                pd.setDetail(n.detail());
-                yield ResponseEntity.unprocessableEntity().body(pd);
+                ProblemDetail problemDetail = ApiErrors.of(HttpStatus.UNPROCESSABLE_ENTITY, ApiErrors.NOT_A_MEMBER, "Not a member: " + n.detail());
+                yield ResponseEntity.unprocessableEntity().body(problemDetail);
             }
 
             case AddToGroupResult.AlreadyInGroup a -> {
-                var pd = ProblemDetail.forStatus(HttpStatus.CONFLICT);
-                pd.setType(URI.create("https://asd.it/errors/already-in-group"));
-                pd.setDetail("Person already in this group with enrollmentId: " + a.existingId());
-                yield ResponseEntity.status(HttpStatus.CONFLICT).body(pd);
+                ProblemDetail problemDetail = ApiErrors.of(HttpStatus.CONFLICT, ApiErrors.ALREADY_IN_GROUP, "Person already in this group with enrollmentId: " + a.existingId());
+                yield ResponseEntity.status(HttpStatus.CONFLICT).body(problemDetail);
             }
         };
     }

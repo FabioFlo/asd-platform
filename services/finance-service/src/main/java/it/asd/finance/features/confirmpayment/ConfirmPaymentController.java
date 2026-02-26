@@ -1,12 +1,12 @@
 package it.asd.finance.features.confirmpayment;
 
+import it.asd.common.exception.ApiErrors;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ProblemDetail;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.net.URI;
 import java.util.UUID;
 
 @RestController
@@ -32,24 +32,18 @@ public class ConfirmPaymentController {
                     new PaymentResponse(c.paymentId(), c.importo(), "CONFIRMED"));
 
             case ConfirmPaymentResult.NotFound n -> {
-                var pd = ProblemDetail.forStatus(HttpStatus.NOT_FOUND);
-                pd.setType(URI.create("https://asd.it/errors/payment-not-found"));
-                pd.setDetail("Payment not found: " + n.paymentId());
-                yield ResponseEntity.status(HttpStatus.NOT_FOUND).body(pd);
+                ProblemDetail problemDetail = ApiErrors.of(HttpStatus.NOT_FOUND, ApiErrors.PAYMENT_NOT_FOUND, "Payment not found: " + n.paymentId());
+                yield ResponseEntity.status(HttpStatus.NOT_FOUND).body(problemDetail);
             }
 
-            case ConfirmPaymentResult.AlreadyConfirmed a -> {
-                var pd = ProblemDetail.forStatus(HttpStatus.CONFLICT);
-                pd.setType(URI.create("https://asd.it/errors/already-confirmed"));
-                pd.setDetail("Payment is already confirmed");
-                yield ResponseEntity.status(HttpStatus.CONFLICT).body(pd);
+            case ConfirmPaymentResult.AlreadyConfirmed _ -> {
+                ProblemDetail problemDetail = ApiErrors.of(HttpStatus.CONFLICT, ApiErrors.PAYMENT_ALREADY_CONFIRMED, "Payment already confirmed");
+                yield ResponseEntity.status(HttpStatus.CONFLICT).body(problemDetail);
             }
 
-            case ConfirmPaymentResult.AlreadyCancelled a -> {
-                var pd = ProblemDetail.forStatus(HttpStatus.CONFLICT);
-                pd.setType(URI.create("https://asd.it/errors/already-cancelled"));
-                pd.setDetail("Payment is cancelled and cannot be confirmed");
-                yield ResponseEntity.status(HttpStatus.CONFLICT).body(pd);
+            case ConfirmPaymentResult.AlreadyCancelled _ -> {
+                ProblemDetail problemDetail = ApiErrors.of(HttpStatus.CONFLICT, ApiErrors.PAYMENT_ALREADY_CANCELLED, "Payment already cancelled");
+                yield ResponseEntity.status(HttpStatus.CONFLICT).body(problemDetail);
             }
         };
     }

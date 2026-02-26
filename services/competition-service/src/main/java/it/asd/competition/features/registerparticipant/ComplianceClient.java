@@ -12,12 +12,12 @@ import java.util.UUID;
 
 /**
  * Thin HTTP client for the Compliance service eligibility endpoint.
- *
+ * <p>
  * FAIL-CLOSED CONTRACT:
  * Any network/timeout/5xx error throws ComplianceCallException.
  * The caller (RegisterParticipantHandler) catches this and returns
  * RegisterParticipantResult.ComplianceUnavailable — never silently allows through.
- *
+ * <p>
  * Kept inside the feature package: only RegisterParticipantHandler uses it.
  * If another feature needed compliance calls, it would get its own client or
  * this would be promoted to shared/.

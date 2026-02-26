@@ -7,10 +7,10 @@ import java.util.UUID;
 
 /**
  * GET /compliance/persons/{personId}/eligibility
- *
+ * <p>
  * Called synchronously by competition-service before allowing event registration.
  * FAIL-CLOSED: if this endpoint is down, competition-service must deny registration.
- *
+ * <p>
  * Returns 200 regardless of eligibility (eligible: true/false in body).
  * Returns 5xx only on unexpected errors → triggers fail-closed in the caller.
  */

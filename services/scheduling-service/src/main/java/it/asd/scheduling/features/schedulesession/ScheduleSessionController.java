@@ -1,12 +1,14 @@
 package it.asd.scheduling.features.schedulesession;
 
+import it.asd.common.exception.ApiErrors;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ProblemDetail;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
-import java.net.URI;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/scheduling/sessions")
@@ -25,39 +27,32 @@ public class ScheduleSessionController {
                     .status(HttpStatus.CREATED)
                     .body(new SessionResponse(s.sessionId(), cmd.asdId(), cmd.venueId(), cmd.titolo()));
 
-            case ScheduleSessionResult.VenueNotFound v -> {
-                var pd = ProblemDetail.forStatus(HttpStatus.NOT_FOUND);
-                pd.setType(URI.create("https://asd.it/errors/venue-not-found"));
-                pd.setDetail("Venue not found or does not belong to ASD");
-                yield ResponseEntity.status(HttpStatus.NOT_FOUND).body(pd);
+            case ScheduleSessionResult.VenueNotFound _ -> {
+                ProblemDetail problemDetail = ApiErrors.of(HttpStatus.NOT_FOUND, ApiErrors.VENUE_NOT_FOUND, "Venue not found or does not belong to ASD");
+                yield ResponseEntity.status(HttpStatus.NOT_FOUND).body(problemDetail);
             }
 
-            case ScheduleSessionResult.RoomNotFound r -> {
-                var pd = ProblemDetail.forStatus(HttpStatus.NOT_FOUND);
-                pd.setType(URI.create("https://asd.it/errors/room-not-found"));
-                pd.setDetail("Room not found or does not belong to venue");
-                yield ResponseEntity.status(HttpStatus.NOT_FOUND).body(pd);
+            case ScheduleSessionResult.RoomNotFound _ -> {
+                ProblemDetail problemDetail = ApiErrors.of(HttpStatus.NOT_FOUND, ApiErrors.ROOM_NOT_FOUND, "Room not found or does not belong to venue");
+                yield ResponseEntity.status(HttpStatus.NOT_FOUND).body(problemDetail);
             }
 
-            case ScheduleSessionResult.GroupNotFound g -> {
-                var pd = ProblemDetail.forStatus(HttpStatus.NOT_FOUND);
+            case ScheduleSessionResult.GroupNotFound _ -> {
+                ProblemDetail problemDetail = ApiErrors.of(HttpStatus.NOT_FOUND, ApiErrors.GROUP_NOT_FOUND, "Group not found in cache — retry in a few seconds");
+               /* var pd = ProblemDetail.forStatus(HttpStatus.NOT_FOUND);
                 pd.setType(URI.create("https://asd.it/errors/group-not-found"));
-                pd.setDetail("Group not found in cache — retry in a few seconds");
-                yield ResponseEntity.status(HttpStatus.NOT_FOUND).body(pd);
+                pd.setDetail("Group not found in cache — retry in a few seconds");*/
+                yield ResponseEntity.status(HttpStatus.NOT_FOUND).body(problemDetail);
             }
 
-            case ScheduleSessionResult.TimeConflict t -> {
-                var pd = ProblemDetail.forStatus(HttpStatus.CONFLICT);
-                pd.setType(URI.create("https://asd.it/errors/time-conflict"));
-                pd.setDetail(t.detail());
-                yield ResponseEntity.status(HttpStatus.CONFLICT).body(pd);
+            case ScheduleSessionResult.TimeConflict _ -> {
+                ProblemDetail problemDetail = ApiErrors.of(HttpStatus.NOT_FOUND, ApiErrors.TIME_CONFLICT, "Time conflict");
+                yield ResponseEntity.status(HttpStatus.CONFLICT).body(problemDetail);
             }
 
-            case ScheduleSessionResult.InvalidTimeRange i -> {
-                var pd = ProblemDetail.forStatus(HttpStatus.UNPROCESSABLE_ENTITY);
-                pd.setType(URI.create("https://asd.it/errors/invalid-time-range"));
-                pd.setDetail("oraFine must be after oraInizio");
-                yield ResponseEntity.unprocessableEntity().body(pd);
+            case ScheduleSessionResult.InvalidTimeRange _ -> {
+                ProblemDetail problemDetail = ApiErrors.of(HttpStatus.NOT_FOUND, ApiErrors.INVALID_DATE_RANGE, "oraFine must be after oraInizio");
+                yield ResponseEntity.unprocessableEntity().body(problemDetail);
             }
         };
     }

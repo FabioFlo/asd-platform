@@ -1,12 +1,14 @@
 package it.asd.competition.features.recordresult;
 
+import it.asd.common.exception.ApiErrors;
+import it.asd.competition.shared.entity.EventParticipationEntity;
+import it.asd.competition.shared.entity.ParticipationStatus;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ProblemDetail;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.net.URI;
 import java.util.UUID;
 
 @RestController
@@ -28,21 +30,18 @@ public class RecordResultController {
                 participationId, cmd.posizione(), cmd.punteggio(), cmd.resultData());
 
         return switch (handler.handle(effectiveCmd)) {
-            case RecordResultResult.Recorded r ->
-                    ResponseEntity.ok(RecordResultResponse.from(
-                            // rebuild lightweight response from result fields
-                            it.asd.competition.shared.entity.EventParticipationEntity.builder()
-                                    .id(r.participationId()).personId(r.personId())
-                                    .groupId(r.groupId()).posizione(r.posizione())
-                                    .punteggio(r.punteggio()).resultData(r.resultData())
-                                    .stato(it.asd.competition.shared.entity.ParticipationStatus.PARTICIPATED)
-                                    .build()));
+            case RecordResultResult.Recorded r -> ResponseEntity.ok(RecordResultResponse.from(
+                    // rebuild lightweight response from result fields
+                    EventParticipationEntity.builder()
+                            .id(r.participationId()).personId(r.personId())
+                            .groupId(r.groupId()).posizione(r.posizione())
+                            .punteggio(r.punteggio()).resultData(r.resultData())
+                            .stato(ParticipationStatus.PARTICIPATED)
+                            .build()));
 
             case RecordResultResult.NotFound nf -> {
-                var pd = ProblemDetail.forStatus(HttpStatus.NOT_FOUND);
-                pd.setType(URI.create("https://asd.it/errors/not-found"));
-                pd.setDetail("Participation not found: " + nf.participationId());
-                yield ResponseEntity.status(HttpStatus.NOT_FOUND).body(pd);
+                ProblemDetail problemDetail = ApiErrors.of(HttpStatus.NOT_FOUND, ApiErrors.PARTICIPATION_NOT_FOUND, nf.participationId().toString());
+                yield ResponseEntity.status(HttpStatus.NOT_FOUND).body(problemDetail);
             }
         };
     }

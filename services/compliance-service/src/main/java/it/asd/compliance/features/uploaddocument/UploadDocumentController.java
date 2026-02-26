@@ -1,13 +1,15 @@
 package it.asd.compliance.features.uploaddocument;
 
+import it.asd.common.exception.ApiErrors;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ProblemDetail;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.net.URI;
 import java.util.UUID;
+
+import static org.springframework.http.HttpStatus.UNPROCESSABLE_ENTITY;
 
 @RestController
 @RequestMapping("/compliance/persons/{personId}/documents")
@@ -39,12 +41,11 @@ public class UploadDocumentController {
                             s.documentType(), null, s.dataScadenza(), "VALID"));
 
             case UploadDocumentResult.InvalidDateRange e -> {
-                var pd = ProblemDetail.forStatus(HttpStatus.UNPROCESSABLE_ENTITY);
-                pd.setType(URI.create("https://asd.it/errors/invalid-date-range"));
-                pd.setDetail(e.reason());
-                pd.setProperty("dataRilascio", e.dataRilascio());
-                pd.setProperty("dataScadenza", e.dataScadenza());
-                yield ResponseEntity.unprocessableEntity().body(pd);
+                ProblemDetail problemDetail = ApiErrors.of(UNPROCESSABLE_ENTITY,
+                        ApiErrors.INVALID_DATE_RANGE,
+                        "Invalid date range: " + "Data rilascio - "
+                                + e.dataRilascio() + "Data scadenza - " + e.dataScadenza());
+                yield ResponseEntity.unprocessableEntity().body(problemDetail);
             }
         };
     }

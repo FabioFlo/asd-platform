@@ -77,6 +77,19 @@
         <type>pom</type>
         <scope>import</scope>
       </dependency>
+      <!-- Test utilities -->
+      <dependency>
+        <groupId>org.instancio</groupId>
+        <artifactId>instancio-junit</artifactId>
+        <version>5.0.0</version>
+        <scope>test</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.awaitility</groupId>
+        <artifactId>awaitility</artifactId>
+        <version>4.2.2</version>
+        <scope>test</scope>
+      </dependency>
     </dependencies>
   </dependencyManagement>
 

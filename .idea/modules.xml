@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/services/competition-service/competition-service.iml" filepath="$PROJECT_DIR$/services/competition-service/competition-service.iml" />
+      <module fileurl="file://$PROJECT_DIR$/services/compliance-service/compliance-service.iml" filepath="$PROJECT_DIR$/services/compliance-service/compliance-service.iml" />
+      <module fileurl="file://$PROJECT_DIR$/services/finance-service/finance-service.iml" filepath="$PROJECT_DIR$/services/finance-service/finance-service.iml" />
+      <module fileurl="file://$PROJECT_DIR$/services/identity-service/identity-service.iml" filepath="$PROJECT_DIR$/services/identity-service/identity-service.iml" />
+      <module fileurl="file://$PROJECT_DIR$/services/membership-service/membership-service.iml" filepath="$PROJECT_DIR$/services/membership-service/membership-service.iml" />
+      <module fileurl="file://$PROJECT_DIR$/services/registry-service/registry-service.iml" filepath="$PROJECT_DIR$/services/registry-service/registry-service.iml" />
+      <module fileurl="file://$PROJECT_DIR$/services/scheduling-service/scheduling-service.iml" filepath="$PROJECT_DIR$/services/scheduling-service/scheduling-service.iml" />
+    </modules>
+  </component>
+</project>

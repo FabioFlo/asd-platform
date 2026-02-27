@@ -14,6 +14,9 @@
           <entry name="$MAVEN_REPOSITORY$/org/mapstruct/mapstruct-processor/1.6.3/mapstruct-processor-1.6.3.jar" />
           <entry name="$MAVEN_REPOSITORY$/org/mapstruct/mapstruct/1.6.3/mapstruct-1.6.3.jar" />
         </processorPath>
+        <module name="bff-member" />
+        <module name="bff-admin" />
+        <module name="asd-satellite-api" />
         <module name="asd-events" />
         <module name="finance-service" />
         <module name="registry-service" />
@@ -30,6 +33,9 @@
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="asd-common" options="-parameters -Amapstruct.defaultComponentModel=spring -Amapstruct.unmappedTargetPolicy=ERROR" />
       <module name="asd-events" options="-parameters -Amapstruct.defaultComponentModel=spring -Amapstruct.unmappedTargetPolicy=ERROR" />
+      <module name="asd-satellite-api" options="-parameters -Amapstruct.defaultComponentModel=spring -Amapstruct.unmappedTargetPolicy=ERROR" />
+      <module name="bff-admin" options="-parameters -Amapstruct.defaultComponentModel=spring -Amapstruct.unmappedTargetPolicy=ERROR" />
+      <module name="bff-member" options="-parameters -Amapstruct.defaultComponentModel=spring -Amapstruct.unmappedTargetPolicy=ERROR" />
       <module name="competition-service" options="-parameters -Amapstruct.defaultComponentModel=spring -Amapstruct.unmappedTargetPolicy=ERROR" />
       <module name="compliance-service" options="-parameters -Amapstruct.defaultComponentModel=spring -Amapstruct.unmappedTargetPolicy=ERROR" />
       <module name="finance-service" options="-parameters -Amapstruct.defaultComponentModel=spring -Amapstruct.unmappedTargetPolicy=ERROR" />

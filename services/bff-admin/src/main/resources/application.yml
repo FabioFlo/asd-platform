@@ -1,0 +1,89 @@
+spring:
+  application:
+    name: bff-admin
+
+  # No database — BFF Admin is a pure aggregation layer.
+  # Caffeine cache for dashboard counters (5 min TTL).
+  cache:
+    type: caffeine
+    caffeine:
+      spec: maximumSize=500,expireAfterWrite=300s
+
+  # ── Security: JWT validation ────────────────────────────────────────────────
+  # Moved under 'spring' so the Resource Server actually starts.
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          jwk-set-uri: ${IDENTITY_JWKS_URI:http://localhost:8082/identity/.well-known/jwks.json}
+
+server:
+  port: 8090
+
+# ── Downstream service URLs ─────────────────────────────────────────────────
+services:
+  registry:
+    base-url: ${REGISTRY_SERVICE_URL:http://localhost:8081}
+  identity:
+    base-url: ${IDENTITY_SERVICE_URL:http://localhost:8082}
+  membership:
+    base-url: ${MEMBERSHIP_SERVICE_URL:http://localhost:8083}
+  scheduling:
+    base-url: ${SCHEDULING_SERVICE_URL:http://localhost:8084}
+  competition:
+    base-url: ${COMPETITION_SERVICE_URL:http://localhost:8085}
+  compliance:
+    base-url: ${COMPLIANCE_SERVICE_URL:http://localhost:8086}
+  finance:
+    base-url: ${FINANCE_SERVICE_URL:http://localhost:8087}
+
+# ── Sport satellite registry ─────────────────────────────────────────────────
+satellites:
+  - name: chess
+    base-url: ${CHESS_SERVICE_URL:http://localhost:8101}
+    disciplina: scacchi
+    display-label: Chess
+    badge-color: "#1B3A5C"
+    profile-route: /chess
+  - name: padel
+    base-url: ${PADEL_SERVICE_URL:http://localhost:8102}
+    disciplina: padel
+    display-label: Padel
+    badge-color: "#D97706"
+    profile-route: /padel
+  - name: football
+    base-url: ${FOOTBALL_SERVICE_URL:http://localhost:8103}
+    disciplina: calcio
+    display-label: Football
+    badge-color: "#16A34A"
+    profile-route: /football
+
+# ── Resilience4j defaults ───────────────────────────────────────────────────
+resilience4j:
+  circuitbreaker:
+    configs:
+      default:
+        sliding-window-size: 10
+        failure-rate-threshold: 50
+        wait-duration-in-open-state: 30s
+        permitted-number-of-calls-in-half-open-state: 3
+  timelimiter:
+    configs:
+      default:
+        timeout-duration: 3s
+
+# ── Actuator ────────────────────────────────────────────────────────────────
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,prometheus,circuitbreakers
+  health:
+    circuitbreakers:
+      enabled: true
+
+logging:
+  level:
+    it.asd: INFO
+    org.springframework.security: INFO
+    org.springframework.web.reactive: WARN

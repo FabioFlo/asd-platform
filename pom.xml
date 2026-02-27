@@ -42,6 +42,7 @@
     <modules>
         <module>shared/asd-events</module>
         <module>shared/asd-common</module>
+        <module>shared/asd-satellite-api</module>
         <module>services/compliance-service</module>
         <module>services/competition-service</module>
         <module>services/registry-service</module>
@@ -49,6 +50,8 @@
         <module>services/membership-service</module>
         <module>services/scheduling-service</module>
         <module>services/finance-service</module>
+        <module>services/bff-admin</module>
+        <module>services/bff-member</module>
     </modules>
 
     <dependencyManagement>
@@ -68,6 +71,11 @@
             <dependency>
                 <groupId>it.asd</groupId>
                 <artifactId>asd-common</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>it.asd</groupId>
+                <artifactId>asd-satellite-api</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>

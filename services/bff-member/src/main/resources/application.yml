@@ -1,0 +1,73 @@
+spring:
+  application:
+    name: bff-member
+  cache:
+    type: caffeine
+    caffeine:
+      spec: maximumSize=1000,expireAfterWrite=120s # 2 min TTL — passport changes more often
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          jwk-set-uri: ${IDENTITY_JWKS_URI:http://localhost:8082/identity/.well-known/jwks.json}
+
+server:
+  port: 8091
+
+services:
+  membership:
+    base-url: ${MEMBERSHIP_SERVICE_URL:http://localhost:8083}
+  compliance:
+    base-url: ${COMPLIANCE_SERVICE_URL:http://localhost:8086}
+  finance:
+    base-url: ${FINANCE_SERVICE_URL:http://localhost:8087}
+  competition:
+    base-url: ${COMPETITION_SERVICE_URL:http://localhost:8085}
+
+# ── Sport satellite registry ─────────────────────────────────────────────────
+satellites:
+  - name: chess
+    base-url: ${CHESS_SERVICE_URL:http://localhost:8101}
+    disciplina: scacchi
+    display-label: Chess
+    badge-color: "#1B3A5C"
+    profile-route: /chess
+  - name: padel
+    base-url: ${PADEL_SERVICE_URL:http://localhost:8102}
+    disciplina: padel
+    display-label: Padel
+    badge-color: "#D97706"
+    profile-route: /padel
+  - name: football
+    base-url: ${FOOTBALL_SERVICE_URL:http://localhost:8103}
+    disciplina: calcio
+    display-label: Football
+    badge-color: "#16A34A"
+    profile-route: /football
+
+resilience4j:
+  circuitbreaker:
+    configs:
+      default:
+        sliding-window-size: 10
+        failure-rate-threshold: 50
+        wait-duration-in-open-state: 30s
+  timelimiter:
+    configs:
+      default:
+        timeout-duration: 3s
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,prometheus,circuitbreakers
+  health:
+    circuitbreakers:
+      enabled: true
+
+logging:
+  level:
+    it.asd: INFO
+    org.springframework.security: INFO  # Changed from WARN to INFO to help debug auth issues
+    org.springframework.web.reactive: WARN

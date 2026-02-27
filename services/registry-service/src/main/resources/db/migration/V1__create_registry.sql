@@ -1,11 +1,11 @@
-CREATE TYPE asd_status_enum AS ENUM ('ACTIVE', 'SUSPENDED', 'DISSOLVED');
-CREATE TYPE season_status_enum AS ENUM ('PLANNED', 'ACTIVE', 'CLOSED');
+-- Registry Service schema
+-- Flyway migration V1
 
 CREATE TABLE asd
 (
-    id              UUID PRIMARY KEY         DEFAULT gen_random_uuid(),
-    codice_fiscale  VARCHAR(16)     NOT NULL UNIQUE,
-    nome            VARCHAR(255)    NOT NULL,
+    id              UUID PRIMARY KEY     DEFAULT gen_random_uuid(),
+    codice_fiscale  VARCHAR(16)  NOT NULL UNIQUE,
+    nome            VARCHAR(255) NOT NULL,
     codice_aff_coni VARCHAR(50),
     codice_aff_fsn  VARCHAR(50),
     disciplina      VARCHAR(100),
@@ -13,21 +13,21 @@ CREATE TABLE asd
     provincia       VARCHAR(100),
     email           VARCHAR(255),
     telefono        VARCHAR(20),
-    stato           asd_status_enum NOT NULL DEFAULT 'ACTIVE',
-    created_at      TIMESTAMPTZ     NOT NULL DEFAULT NOW(),
-    updated_at      TIMESTAMPTZ     NOT NULL DEFAULT NOW()
+    stato           VARCHAR(20)  NOT NULL DEFAULT 'ACTIVE',
+    created_at      TIMESTAMPTZ  NOT NULL DEFAULT NOW(),
+    updated_at      TIMESTAMPTZ  NOT NULL DEFAULT NOW()
 );
 
 CREATE TABLE season
 (
-    id          UUID PRIMARY KEY            DEFAULT gen_random_uuid(),
-    asd_id      UUID               NOT NULL,
-    codice      VARCHAR(10)        NOT NULL,
-    data_inizio DATE               NOT NULL,
-    data_fine   DATE               NOT NULL,
-    stato       season_status_enum NOT NULL DEFAULT 'PLANNED',
-    created_at  TIMESTAMPTZ        NOT NULL DEFAULT NOW(),
-    updated_at  TIMESTAMPTZ        NOT NULL DEFAULT NOW(),
+    id          UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    asd_id      UUID         NOT NULL,
+    codice      VARCHAR(10)  NOT NULL,
+    data_inizio DATE         NOT NULL,
+    data_fine   DATE         NOT NULL,
+    stato       VARCHAR(20)  NOT NULL DEFAULT 'PLANNED',
+    created_at  TIMESTAMPTZ  NOT NULL DEFAULT NOW(),
+    updated_at  TIMESTAMPTZ  NOT NULL DEFAULT NOW(),
     CONSTRAINT uq_season_asd_codice UNIQUE (asd_id, codice),
     CONSTRAINT chk_season_dates CHECK (data_fine > data_inizio)
 );
@@ -43,7 +43,8 @@ CREATE OR REPLACE FUNCTION set_updated_at()
     RETURNS TRIGGER AS
 $$
 BEGIN
-    NEW.updated_at = NOW(); RETURN NEW;
+    NEW.updated_at = NOW();
+    RETURN NEW;
 END;
 $$ LANGUAGE plpgsql;
 
@@ -52,6 +53,7 @@ CREATE TRIGGER trg_asd_updated_at
     ON asd
     FOR EACH ROW
 EXECUTE FUNCTION set_updated_at();
+
 CREATE TRIGGER trg_season_updated_at
     BEFORE UPDATE
     ON season

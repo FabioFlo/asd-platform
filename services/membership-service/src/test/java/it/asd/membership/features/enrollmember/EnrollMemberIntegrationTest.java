@@ -9,11 +9,12 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.boot.test.web.client.TestRestTemplate;
+import org.springframework.context.annotation.Bean;
 import org.springframework.http.ResponseEntity;
 import org.springframework.kafka.annotation.KafkaListener;
-import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -114,10 +115,16 @@ class EnrollMemberIntegrationTest extends BaseIntegrationTest {
         assertThat(secondResponse.getStatusCode().value()).isEqualTo(409);
     }
 
-    /**
-     * Captures membership.activated Kafka envelopes for integration test assertions.
-     */
-    @Component
+    // ── Kafka capture ─────────────────────────────────────────────────────────
+
+    @TestConfiguration
+    static class KafkaTestConfig {
+        @Bean
+        MembershipActivatedEventCapture membershipActivatedEventCapture() {
+            return new MembershipActivatedEventCapture();
+        }
+    }
+
     static class MembershipActivatedEventCapture {
 
         private final List<EventEnvelope> received = new CopyOnWriteArrayList<>();

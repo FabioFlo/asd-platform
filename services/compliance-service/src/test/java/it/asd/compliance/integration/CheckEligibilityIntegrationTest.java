@@ -5,10 +5,7 @@ import it.asd.compliance.features.uploaddocument.UploadDocumentCommand;
 import it.asd.compliance.shared.TestFixtures;
 import it.asd.compliance.shared.entity.DocumentType;
 import it.asd.compliance.shared.repository.DocumentRepository;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Tag;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.ResponseEntity;
@@ -69,6 +66,7 @@ class CheckEligibilityIntegrationTest extends BaseIntegrationTest {
         var response = checkEligibility(false);
 
         assertThat(response.getStatusCode().value()).isEqualTo(200);
+        Assertions.assertNotNull(response.getBody());
         assertThat(response.getBody().eligible()).isFalse();
     }
 

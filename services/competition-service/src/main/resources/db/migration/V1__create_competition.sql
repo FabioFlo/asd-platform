@@ -1,26 +1,22 @@
 -- Competition Service schema
 -- Flyway migration V1
 
-CREATE TYPE participation_status_enum AS ENUM (
-    'REGISTERED', 'CONFIRMED', 'PARTICIPATED', 'WITHDREW', 'DISQUALIFIED'
-);
-
 CREATE TABLE event_participation
 (
-    id          UUID PRIMARY KEY                   DEFAULT gen_random_uuid(),
-    event_id    UUID                      NOT NULL,
+    id          UUID PRIMARY KEY  NOT NULL DEFAULT gen_random_uuid(),
+    event_id    UUID              NOT NULL,
     person_id   UUID,
     group_id    UUID,
-    asd_id      UUID                      NOT NULL,
+    asd_id      UUID              NOT NULL,
     season_id   UUID,
     categoria   VARCHAR(50),
-    stato       participation_status_enum NOT NULL DEFAULT 'REGISTERED',
+    stato       VARCHAR(20)       NOT NULL DEFAULT 'REGISTERED',
     posizione   INT,
     punteggio   NUMERIC(10, 2),
     result_data JSONB,
     note        TEXT,
-    created_at  TIMESTAMPTZ               NOT NULL DEFAULT NOW(),
-    updated_at  TIMESTAMPTZ               NOT NULL DEFAULT NOW(),
+    created_at  TIMESTAMPTZ       NOT NULL DEFAULT NOW(),
+    updated_at  TIMESTAMPTZ       NOT NULL DEFAULT NOW(),
 
     CONSTRAINT chk_has_participant
         CHECK (person_id IS NOT NULL OR group_id IS NOT NULL)
@@ -33,15 +29,14 @@ CREATE INDEX idx_participation_person_event
 CREATE INDEX idx_participation_result_gin
     ON event_participation USING GIN (result_data);
 
-CREATE
-OR REPLACE FUNCTION set_updated_at()
-RETURNS TRIGGER AS $$
-BEGIN NEW.updated_at
-= NOW();
-RETURN NEW;
-END;
+CREATE OR REPLACE FUNCTION set_updated_at()
+    RETURNS TRIGGER AS
 $$
-LANGUAGE plpgsql;
+BEGIN
+    NEW.updated_at = NOW();
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
 
 CREATE TRIGGER trg_participation_updated_at
     BEFORE UPDATE

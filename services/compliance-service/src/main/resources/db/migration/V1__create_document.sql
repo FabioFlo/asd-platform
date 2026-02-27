@@ -1,35 +1,21 @@
 -- Compliance Service schema
 -- Flyway migration V1
 
-CREATE TYPE doc_type_enum AS ENUM (
-    'CERTIFICATO_MEDICO_AGONISTICO',
-    'CERTIFICATO_MEDICO_NON_AGONISTICO',
-    'ASSICURAZIONE',
-    'TESSERA_FEDERALE',
-    'CONSENSO_PRIVACY',
-    'CONSENSO_IMMAGINI',
-    'OTHER'
-);
-
-CREATE TYPE doc_status_enum AS ENUM (
-    'VALID', 'EXPIRING_SOON', 'EXPIRED', 'MISSING', 'UNDER_REVIEW'
-);
-
 CREATE TABLE document
 (
-    id            UUID PRIMARY KEY         DEFAULT gen_random_uuid(),
-    person_id     UUID            NOT NULL,
-    asd_id        UUID            NOT NULL,
-    tipo          doc_type_enum   NOT NULL,
+    id            UUID PRIMARY KEY     DEFAULT gen_random_uuid(),
+    person_id     UUID        NOT NULL,
+    asd_id        UUID        NOT NULL,
+    tipo          VARCHAR(50) NOT NULL,
     data_rilascio DATE,
     data_scadenza DATE,
-    stato         doc_status_enum NOT NULL DEFAULT 'VALID',
+    stato         VARCHAR(20) NOT NULL DEFAULT 'VALID',
     numero        VARCHAR(100),
     ente_rilascio VARCHAR(100),
     file_url      TEXT,
     note          TEXT,
-    created_at    TIMESTAMPTZ     NOT NULL DEFAULT NOW(),
-    updated_at    TIMESTAMPTZ     NOT NULL DEFAULT NOW(),
+    created_at    TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    updated_at    TIMESTAMPTZ NOT NULL DEFAULT NOW(),
 
     CONSTRAINT chk_doc_dates
         CHECK (data_scadenza IS NULL

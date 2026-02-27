@@ -12,10 +12,11 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.boot.test.web.client.TestRestTemplate;
+import org.springframework.context.annotation.Bean;
 import org.springframework.http.ResponseEntity;
 import org.springframework.kafka.annotation.KafkaListener;
-import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -81,7 +82,6 @@ class ActivateSeasonIntegrationTest extends BaseIntegrationTest {
         assertThat(saved.get().getCodice()).isEqualTo("2025-2026");
         assertThat(saved.get().getAsdId()).isEqualTo(asdId);
 
-        var seasonId = response.getBody().seasonId().toString();
         await().atMost(10, SECONDS).untilAsserted(() ->
                 assertThat(eventCapture.envelopes())
                         .anyMatch(e -> asdId.equals(e.asdId())));
@@ -113,10 +113,16 @@ class ActivateSeasonIntegrationTest extends BaseIntegrationTest {
         assertThat(response.getStatusCode().value()).isEqualTo(409);
     }
 
-    /**
-     * Captures season.activated Kafka envelopes for integration test assertions.
-     */
-    @Component
+    // ── Kafka capture ─────────────────────────────────────────────────────────
+
+    @TestConfiguration
+    static class KafkaTestConfig {
+        @Bean
+        SeasonActivatedEventCapture seasonActivatedEventCapture() {
+            return new SeasonActivatedEventCapture();
+        }
+    }
+
     static class SeasonActivatedEventCapture {
 
         private final List<EventEnvelope> received = new CopyOnWriteArrayList<>();

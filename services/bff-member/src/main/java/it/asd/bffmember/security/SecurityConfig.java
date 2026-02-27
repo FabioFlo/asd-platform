@@ -1,10 +1,12 @@
 package it.asd.bffmember.security;
 
+import it.asd.common.enums.AsdRole;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationConverter;
 import org.springframework.security.oauth2.server.resource.authentication.JwtGrantedAuthoritiesConverter;
@@ -14,7 +16,7 @@ import org.springframework.security.web.SecurityFilterChain;
 /**
  * BFF Member security.
  * Members authenticate with the same JWT issued by Identity service.
- * Role required: ROLE_ATLETA or ROLE_SOCIO.
+ * Role required: ROLE_ATLETA or ROLE_TECNICO.
  * A person can only access their own data — enforced in handlers via
  * comparing person_id from JWT claim against the requested resource.
  */
@@ -32,12 +34,12 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http
-                .csrf(csrf -> csrf.disable())
+                .csrf(AbstractHttpConfigurer::disable)
                 .sessionManagement(s -> s.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/actuator/health", "/actuator/info").permitAll()
                         .requestMatchers("/member/**")
-                            .hasAnyRole("ATLETA", "SOCIO", "DIRETTORE", "SEGRETARIO", "ALLENATORE")
+                        .hasAnyRole(AsdRole.ATLETA.name(), AsdRole.DIRIGENTE.name(), AsdRole.AMMINISTRATORE.name(), AsdRole.TECNICO.name(), AsdRole.CAPITANO.name(), AsdRole.VICE_CAPITANO.name())
                         .anyRequest().authenticated()
                 )
                 .oauth2ResourceServer(oauth2 -> oauth2

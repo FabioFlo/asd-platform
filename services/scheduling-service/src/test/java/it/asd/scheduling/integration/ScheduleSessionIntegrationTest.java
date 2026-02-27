@@ -11,10 +11,11 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.boot.test.web.client.TestRestTemplate;
+import org.springframework.context.annotation.Bean;
 import org.springframework.http.ResponseEntity;
 import org.springframework.kafka.annotation.KafkaListener;
-import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Map;
@@ -129,10 +130,16 @@ class ScheduleSessionIntegrationTest extends BaseIntegrationTest {
         assertThat(response.getStatusCode().value()).isEqualTo(422);
     }
 
-    /**
-     * Captures session.scheduled Kafka envelopes for integration test assertions.
-     */
-    @Component
+    // ── Kafka capture ─────────────────────────────────────────────────────────
+
+    @TestConfiguration
+    static class KafkaTestConfig {
+        @Bean
+        SessionScheduledEventCapture sessionScheduledEventCapture() {
+            return new SessionScheduledEventCapture();
+        }
+    }
+
     static class SessionScheduledEventCapture {
 
         private final List<EventEnvelope> received = new CopyOnWriteArrayList<>();

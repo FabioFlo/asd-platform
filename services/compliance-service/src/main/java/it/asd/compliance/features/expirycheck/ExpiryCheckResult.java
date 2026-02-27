@@ -17,6 +17,8 @@ public sealed interface ExpiryCheckResult
             int expiringSoonCount,
             List<UUID> failedDocumentIds    // IDs that couldn't be processed
     ) implements ExpiryCheckResult {
-        public boolean hasFailures() { return !failedDocumentIds.isEmpty(); }
+        public boolean hasFailures() {
+            return !failedDocumentIds.isEmpty();
+        }
     }
 }

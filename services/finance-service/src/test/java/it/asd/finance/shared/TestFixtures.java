@@ -5,10 +5,10 @@ import it.asd.events.competition.ParticipantRegisteredEvent;
 import it.asd.events.membership.GroupEnrollmentAddedEvent;
 import it.asd.events.membership.MembershipActivatedEvent;
 import it.asd.finance.features.confirmpayment.ConfirmPaymentCommand;
+import it.asd.finance.shared.entity.FeeRuleEntity;
 import it.asd.finance.shared.entity.PaymentEntity;
 import it.asd.finance.shared.entity.PaymentStatus;
 import it.asd.finance.shared.entity.PaymentType;
-import it.asd.finance.shared.entity.FeeRuleEntity;
 
 import java.math.BigDecimal;
 import java.time.Instant;
@@ -18,24 +18,25 @@ import java.util.UUID;
 /**
  * Centralized test data for finance-service.
  * All test classes import from here — never build entities inline.
- *
+ * <p>
  * Keep builders minimal: use sensible defaults, let callers override
  * only what matters for their specific test case.
  */
 public final class TestFixtures {
 
-    private TestFixtures() {}
+    private TestFixtures() {
+    }
 
     // ── Stable IDs ────────────────────────────────────────────────────────────
 
-    public static final UUID PERSON_ID     = UUID.fromString("11111111-1111-1111-1111-111111111111");
-    public static final UUID ASD_ID        = UUID.fromString("22222222-2222-2222-2222-222222222222");
-    public static final UUID SEASON_ID     = UUID.fromString("33333333-3333-3333-3333-333333333333");
+    public static final UUID PERSON_ID = UUID.fromString("11111111-1111-1111-1111-111111111111");
+    public static final UUID ASD_ID = UUID.fromString("22222222-2222-2222-2222-222222222222");
+    public static final UUID SEASON_ID = UUID.fromString("33333333-3333-3333-3333-333333333333");
     public static final UUID MEMBERSHIP_ID = UUID.fromString("44444444-4444-4444-4444-444444444444");
     public static final UUID ENROLLMENT_ID = UUID.fromString("55555555-5555-5555-5555-555555555555");
     public static final UUID PARTICIPATION_ID = UUID.fromString("66666666-6666-6666-6666-666666666666");
-    public static final UUID PAYMENT_ID    = UUID.fromString("77777777-7777-7777-7777-777777777777");
-    public static final UUID GROUP_ID      = UUID.fromString("88888888-8888-8888-8888-888888888888");
+    public static final UUID PAYMENT_ID = UUID.fromString("77777777-7777-7777-7777-777777777777");
+    public static final UUID GROUP_ID = UUID.fromString("88888888-8888-8888-8888-888888888888");
     public static final UUID COMPETITION_EVENT_ID = UUID.fromString("99999999-9999-9999-9999-999999999999");
 
     // ── Commands ──────────────────────────────────────────────────────────────

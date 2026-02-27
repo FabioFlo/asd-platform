@@ -1,14 +1,17 @@
 package it.asd.registry.features.activateseason;
 
 import it.asd.common.exception.ApiErrors;
+import it.asd.common.validation.annotation.ValidUUID;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ProblemDetail;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
 
+@Validated
 @RestController
 @RequestMapping("/registry/asd/{asdId}/seasons")
 public class ActivateSeasonController {
@@ -21,7 +24,7 @@ public class ActivateSeasonController {
 
     @PostMapping
     public ResponseEntity<?> activate(
-            @PathVariable UUID asdId,
+            @PathVariable @ValidUUID UUID asdId,
             @Valid @RequestBody ActivateSeasonCommand cmd) {
 
         var effectiveCmd = new ActivateSeasonCommand(

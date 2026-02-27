@@ -1,9 +1,11 @@
 package it.asd.identity.features.getperson;
 
 import it.asd.common.exception.ApiErrors;
+import it.asd.common.validation.annotation.ValidUUID;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ProblemDetail;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.UUID;
 
+@Validated
 @RestController
 @RequestMapping("/identity/persons/{personId}")
 public class GetPersonController {
@@ -22,7 +25,7 @@ public class GetPersonController {
     }
 
     @GetMapping
-    public ResponseEntity<?> get(@PathVariable UUID personId) {
+    public ResponseEntity<?> get(@PathVariable @ValidUUID UUID personId) {
         return switch (handler.handle(new GetPersonQuery(personId))) {
             case GetPersonResult.Found f -> ResponseEntity.ok(f.response());
 

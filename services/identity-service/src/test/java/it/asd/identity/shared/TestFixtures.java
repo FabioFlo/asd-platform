@@ -16,7 +16,8 @@ import java.util.UUID;
  */
 public final class TestFixtures {
 
-    private TestFixtures() {}
+    private TestFixtures() {
+    }
 
     // ── Commands ──────────────────────────────────────────────────────────────
 

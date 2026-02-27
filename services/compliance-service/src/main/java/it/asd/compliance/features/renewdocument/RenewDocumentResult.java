@@ -9,8 +9,8 @@ import java.util.UUID;
  */
 public sealed interface RenewDocumentResult
         permits RenewDocumentResult.Renewed,
-                RenewDocumentResult.NotFound,
-                RenewDocumentResult.InvalidDateRange {
+        RenewDocumentResult.NotFound,
+        RenewDocumentResult.InvalidDateRange {
 
     record Renewed(
             UUID documentId,
@@ -18,9 +18,12 @@ public sealed interface RenewDocumentResult
             UUID asdId,
             String documentType,
             LocalDate newDataScadenza
-    ) implements RenewDocumentResult {}
+    ) implements RenewDocumentResult {
+    }
 
-    record NotFound(UUID documentId) implements RenewDocumentResult {}
+    record NotFound(UUID documentId) implements RenewDocumentResult {
+    }
 
-    record InvalidDateRange(String reason) implements RenewDocumentResult {}
+    record InvalidDateRange(String reason) implements RenewDocumentResult {
+    }
 }

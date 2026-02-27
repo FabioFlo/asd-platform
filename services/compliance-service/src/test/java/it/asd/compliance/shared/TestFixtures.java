@@ -14,10 +14,11 @@ import java.util.UUID;
  */
 public final class TestFixtures {
 
-    private TestFixtures() {}
+    private TestFixtures() {
+    }
 
     public static final UUID PERSON_ID = UUID.fromString("11111111-1111-1111-1111-111111111111");
-    public static final UUID ASD_ID    = UUID.fromString("22222222-2222-2222-2222-222222222222");
+    public static final UUID ASD_ID = UUID.fromString("22222222-2222-2222-2222-222222222222");
 
     // ── Commands ──────────────────────────────────────────────────────────────
 

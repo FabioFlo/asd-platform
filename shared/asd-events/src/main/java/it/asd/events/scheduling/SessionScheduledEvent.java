@@ -1,6 +1,7 @@
 package it.asd.events.scheduling;
 
 import it.asd.events.DomainEvent;
+
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -11,6 +12,13 @@ public record SessionScheduledEvent(
         UUID venueId, LocalDate data, LocalTime oraInizio, LocalTime oraFine,
         String tipo, Instant occurredAt
 ) implements DomainEvent {
-    @Override public String aggregateId()   { return sessionId.toString(); }
-    @Override public String aggregateType() { return "SessionEntity"; }
+    @Override
+    public String aggregateId() {
+        return sessionId.toString();
+    }
+
+    @Override
+    public String aggregateType() {
+        return "SessionEntity";
+    }
 }

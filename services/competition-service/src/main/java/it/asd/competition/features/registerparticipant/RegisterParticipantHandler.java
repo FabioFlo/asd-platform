@@ -17,14 +17,14 @@ import java.util.UUID;
 
 /**
  * Vertical slice handler: owns ALL logic for registering a participant.
- *
+ * <p>
  * Eligibility resolution order (fail-closed at every step):
- *   1. Check local eligibility cache (warm path — no network call)
- *   2. If cache says INELIGIBLE → deny immediately
- *   3. If cache is absent → call Compliance sync (cold path)
- *   4. If Compliance unreachable → DENY (fail-closed, return ComplianceUnavailable)
- *   5. If Compliance says ineligible → DENY, update cache
- *   6. If eligible → persist, publish event, update cache
+ * 1. Check local eligibility cache (warm path — no network call)
+ * 2. If cache says INELIGIBLE → deny immediately
+ * 3. If cache is absent → call Compliance sync (cold path)
+ * 4. If Compliance unreachable → DENY (fail-closed, return ComplianceUnavailable)
+ * 5. If Compliance says ineligible → DENY, update cache
+ * 6. If eligible → persist, publish event, update cache
  */
 @Component
 public class RegisterParticipantHandler {
@@ -32,9 +32,9 @@ public class RegisterParticipantHandler {
     private static final Logger log = LoggerFactory.getLogger(RegisterParticipantHandler.class);
 
     private final EventParticipationRepository participationRepo;
-    private final EligibilityCacheService      eligibilityCache;
-    private final ComplianceClient             complianceClient;
-    private final EventPublisher               eventPublisher;
+    private final EligibilityCacheService eligibilityCache;
+    private final ComplianceClient complianceClient;
+    private final EventPublisher eventPublisher;
 
     public RegisterParticipantHandler(
             EventParticipationRepository participationRepo,
@@ -42,9 +42,9 @@ public class RegisterParticipantHandler {
             ComplianceClient complianceClient,
             EventPublisher eventPublisher) {
         this.participationRepo = participationRepo;
-        this.eligibilityCache  = eligibilityCache;
-        this.complianceClient  = complianceClient;
-        this.eventPublisher    = eventPublisher;
+        this.eligibilityCache = eligibilityCache;
+        this.complianceClient = complianceClient;
+        this.eventPublisher = eventPublisher;
     }
 
     @Transactional
@@ -98,7 +98,7 @@ public class RegisterParticipantHandler {
     /**
      * Returns a non-null RegisterParticipantResult if eligibility blocks registration,
      * or null if the person is eligible and we should proceed.
-     *
+     * <p>
      * This helper keeps the main handle() method readable.
      */
     private RegisterParticipantResult resolveEligibility(RegisterParticipantCommand cmd) {

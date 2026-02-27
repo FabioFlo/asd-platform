@@ -1,9 +1,11 @@
 package it.asd.compliance.features.renewdocument;
 
 import it.asd.common.exception.ApiErrors;
+import it.asd.common.validation.annotation.ValidUUID;
 import jakarta.validation.Valid;
 import org.springframework.http.ProblemDetail;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
@@ -11,6 +13,7 @@ import java.util.UUID;
 import static org.springframework.http.HttpStatus.NOT_FOUND;
 import static org.springframework.http.HttpStatus.UNPROCESSABLE_ENTITY;
 
+@Validated
 @RestController
 @RequestMapping("/compliance/documents/{documentId}/renew")
 public class RenewDocumentController {
@@ -23,7 +26,7 @@ public class RenewDocumentController {
 
     @PostMapping
     public ResponseEntity<?> renew(
-            @PathVariable UUID documentId,
+            @PathVariable @ValidUUID UUID documentId,
             @Valid @RequestBody RenewDocumentCommand cmd) {
 
         RenewDocumentCommand effectiveCmd = new RenewDocumentCommand(

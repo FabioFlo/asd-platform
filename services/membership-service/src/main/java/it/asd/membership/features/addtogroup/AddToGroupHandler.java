@@ -71,7 +71,7 @@ public class AddToGroupHandler {
                 .groupId(cmd.groupId())
                 .asdId(group.getAsdId())
                 .seasonId(cmd.seasonId())
-                .ruolo(cmd.ruolo())
+                .ruolo(cmd.ruolo().name())
                 .dataIngresso(cmd.dataIngresso())
                 .stato(EnrollmentStatus.ACTIVE)
                 .build();

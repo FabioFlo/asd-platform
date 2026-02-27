@@ -15,7 +15,7 @@ import java.util.concurrent.CompletableFuture;
 /**
  * Single publishing entry point. Partition key = aggregateId
  * to preserve ordering per aggregate across topic partitions.
- *
+ * <p>
  * No Lombok — Logger via LoggerFactory, fields via constructor injection.
  */
 @Component
@@ -30,7 +30,7 @@ public final class EventPublisher {
             KafkaTemplate<String, EventEnvelope> kafkaTemplate,
             @Value("${spring.application.name}") String serviceName) {
         this.kafkaTemplate = kafkaTemplate;
-        this.serviceName   = serviceName;
+        this.serviceName = serviceName;
     }
 
     public CompletableFuture<SendResult<String, EventEnvelope>> publish(

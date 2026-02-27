@@ -22,8 +22,8 @@ public class OverdueScanScheduler {
         var result = handler.scan();
         switch (result) {
             case OverdueScanResult.Summary s ->
-                log.info("[OVERDUE_SCAN_SCHEDULER] Completed: markedOverdue={} failed={}",
-                        s.markedOverdue(), s.failed().size());
+                    log.info("[OVERDUE_SCAN_SCHEDULER] Completed: markedOverdue={} failed={}",
+                            s.markedOverdue(), s.failed().size());
         }
     }
 }

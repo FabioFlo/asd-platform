@@ -16,7 +16,6 @@ import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
@@ -89,7 +88,9 @@ class RegisterPersonIntegrationTest extends BaseIntegrationTest {
         assertThat(response.getStatusCode().value()).isEqualTo(422);
     }
 
-    /** Captures person.created Kafka envelopes for integration test assertions. */
+    /**
+     * Captures person.created Kafka envelopes for integration test assertions.
+     */
     @Component
     static class PersonCreatedEventCapture {
 

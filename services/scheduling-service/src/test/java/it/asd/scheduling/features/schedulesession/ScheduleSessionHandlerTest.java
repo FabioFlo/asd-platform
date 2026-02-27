@@ -18,7 +18,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
@@ -85,7 +84,7 @@ class ScheduleSessionHandlerTest {
         @Test
         @DisplayName("returns Scheduled, verifies room + group, saves entity, and publishes event")
         void returnsScheduledWithRoomAndGroup() {
-            var roomId  = UUID.randomUUID();
+            var roomId = UUID.randomUUID();
             var groupId = UUID.randomUUID();
             var cmd = TestFixtures.validScheduleSessionCommand(TestFixtures.VENUE_ID, roomId, groupId);
             when(venueRepository.findById(cmd.venueId()))
@@ -167,7 +166,7 @@ class ScheduleSessionHandlerTest {
         @Test
         @DisplayName("returns RoomNotFound when room belongs to a different venue")
         void returnsRoomNotFoundWhenWrongVenue() {
-            var roomId    = UUID.randomUUID();
+            var roomId = UUID.randomUUID();
             var otherVenueId = UUID.randomUUID();
             var cmd = TestFixtures.validScheduleSessionCommand(TestFixtures.VENUE_ID, roomId, null);
             when(venueRepository.findById(cmd.venueId()))

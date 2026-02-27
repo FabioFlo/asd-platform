@@ -10,21 +10,27 @@ import java.util.UUID;
  */
 public sealed interface UploadDocumentResult
         permits UploadDocumentResult.Success,
-                UploadDocumentResult.InvalidDateRange {
+        UploadDocumentResult.InvalidDateRange {
 
-    /** Document was persisted and the creation event was published. */
+    /**
+     * Document was persisted and the creation event was published.
+     */
     record Success(
             UUID documentId,
             UUID personId,
             UUID asdId,
             String documentType,
             LocalDate dataScadenza
-    ) implements UploadDocumentResult {}
+    ) implements UploadDocumentResult {
+    }
 
-    /** dataScadenza is before dataRilascio — business rule violation. */
+    /**
+     * dataScadenza is before dataRilascio — business rule violation.
+     */
     record InvalidDateRange(
             LocalDate dataRilascio,
             LocalDate dataScadenza,
             String reason
-    ) implements UploadDocumentResult {}
+    ) implements UploadDocumentResult {
+    }
 }

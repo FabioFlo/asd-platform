@@ -1,5 +1,6 @@
 package it.asd.membership.shared;
 
+import it.asd.common.enums.AsdRole;
 import it.asd.membership.features.addtogroup.AddToGroupCommand;
 import it.asd.membership.features.creategroup.CreateGroupCommand;
 import it.asd.membership.features.enrollmember.EnrollMemberCommand;
@@ -18,7 +19,8 @@ import java.util.UUID;
  */
 public final class TestFixtures {
 
-    private TestFixtures() {}
+    private TestFixtures() {
+    }
 
     // ── Commands ──────────────────────────────────────────────────────────────
 
@@ -48,7 +50,7 @@ public final class TestFixtures {
                 membershipPersonId,
                 groupId,
                 UUID.randomUUID(),
-                "Atleta",
+                AsdRole.ATLETA,
                 LocalDate.of(2024, 9, 15)
         );
     }

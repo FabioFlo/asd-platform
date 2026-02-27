@@ -3,13 +3,7 @@ package it.asd.scheduling.shared;
 import it.asd.scheduling.features.addroom.AddRoomCommand;
 import it.asd.scheduling.features.createvenue.CreateVenueCommand;
 import it.asd.scheduling.features.schedulesession.ScheduleSessionCommand;
-import it.asd.scheduling.shared.entity.RoomEntity;
-import it.asd.scheduling.shared.entity.RoomStatus;
-import it.asd.scheduling.shared.entity.SessionEntity;
-import it.asd.scheduling.shared.entity.SessionStatus;
-import it.asd.scheduling.shared.entity.SessionType;
-import it.asd.scheduling.shared.entity.VenueEntity;
-import it.asd.scheduling.shared.entity.VenueStatus;
+import it.asd.scheduling.shared.entity.*;
 import it.asd.scheduling.shared.readmodel.GroupCacheEntity;
 
 import java.time.LocalDate;
@@ -23,14 +17,15 @@ import java.util.UUID;
  */
 public final class TestFixtures {
 
-    private TestFixtures() {}
+    private TestFixtures() {
+    }
 
     // ── Shared IDs ────────────────────────────────────────────────────────────
 
-    public static final UUID ASD_ID    = UUID.fromString("00000000-0000-0000-0000-000000000001");
-    public static final UUID VENUE_ID  = UUID.fromString("00000000-0000-0000-0000-000000000002");
-    public static final UUID ROOM_ID   = UUID.fromString("00000000-0000-0000-0000-000000000003");
-    public static final UUID GROUP_ID  = UUID.fromString("00000000-0000-0000-0000-000000000004");
+    public static final UUID ASD_ID = UUID.fromString("00000000-0000-0000-0000-000000000001");
+    public static final UUID VENUE_ID = UUID.fromString("00000000-0000-0000-0000-000000000002");
+    public static final UUID ROOM_ID = UUID.fromString("00000000-0000-0000-0000-000000000003");
+    public static final UUID GROUP_ID = UUID.fromString("00000000-0000-0000-0000-000000000004");
     public static final UUID SEASON_ID = UUID.fromString("00000000-0000-0000-0000-000000000005");
 
     // ── Commands ──────────────────────────────────────────────────────────────
@@ -164,7 +159,9 @@ public final class TestFixtures {
         return savedSession(UUID.randomUUID(), VENUE_ID, ROOM_ID);
     }
 
-    /** A conflicting session occupying the same room and time slot. */
+    /**
+     * A conflicting session occupying the same room and time slot.
+     */
     public static SessionEntity conflictingSession(UUID roomId, LocalDate data,
                                                    LocalTime oraInizio, LocalTime oraFine) {
         return SessionEntity.builder()

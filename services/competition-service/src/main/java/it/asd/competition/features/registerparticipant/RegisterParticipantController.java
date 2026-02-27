@@ -1,10 +1,12 @@
 package it.asd.competition.features.registerparticipant;
 
 import it.asd.common.exception.ApiErrors;
+import it.asd.common.validation.annotation.ValidUUID;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ProblemDetail;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.Duration;
@@ -12,6 +14,7 @@ import java.util.UUID;
 
 import static org.springframework.http.HttpStatus.*;
 
+@Validated
 @RestController
 @RequestMapping("/competition/events/{eventId}/participants")
 public class RegisterParticipantController {
@@ -24,7 +27,7 @@ public class RegisterParticipantController {
 
     @PostMapping
     public ResponseEntity<?> register(
-            @PathVariable UUID eventId,
+            @PathVariable @ValidUUID UUID eventId,
             @Valid @RequestBody RegisterParticipantCommand cmd) {
 
         var effectiveCmd = new RegisterParticipantCommand(

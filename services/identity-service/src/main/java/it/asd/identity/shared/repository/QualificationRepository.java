@@ -9,6 +9,7 @@ import java.util.UUID;
 
 public interface QualificationRepository extends JpaRepository<QualificationEntity, UUID> {
     List<QualificationEntity> findByPersonId(UUID personId);
+
     List<QualificationEntity> findByPersonIdAndTipoAndStato(
             UUID personId, String tipo, QualificationStatus stato);
 }

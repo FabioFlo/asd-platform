@@ -1,14 +1,17 @@
 package it.asd.membership.features.addtogroup;
 
 import it.asd.common.exception.ApiErrors;
+import it.asd.common.validation.annotation.ValidUUID;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ProblemDetail;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
 
+@Validated
 @RestController
 @RequestMapping("/membership/groups/{groupId}/members")
 public class AddToGroupController {
@@ -21,7 +24,7 @@ public class AddToGroupController {
 
     @PostMapping
     public ResponseEntity<?> add(
-            @PathVariable UUID groupId,
+            @PathVariable @ValidUUID UUID groupId,
             @Valid @RequestBody AddToGroupCommand cmd) {
 
         var effectiveCmd = new AddToGroupCommand(

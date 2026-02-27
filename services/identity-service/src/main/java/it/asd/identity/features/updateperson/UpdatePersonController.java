@@ -1,14 +1,17 @@
 package it.asd.identity.features.updateperson;
 
 import it.asd.common.exception.ApiErrors;
+import it.asd.common.validation.annotation.ValidUUID;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ProblemDetail;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
 
+@Validated
 @RestController
 @RequestMapping("/identity/persons/{personId}")
 public class UpdatePersonController {
@@ -21,7 +24,7 @@ public class UpdatePersonController {
 
     @PatchMapping
     public ResponseEntity<?> update(
-            @PathVariable UUID personId,
+            @PathVariable @ValidUUID UUID personId,
             @Valid @RequestBody UpdatePersonCommand cmd) {
 
         var effectiveCmd = new UpdatePersonCommand(

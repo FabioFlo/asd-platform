@@ -18,14 +18,14 @@ public class RecordResultHandler {
     private static final Logger log = LoggerFactory.getLogger(RecordResultHandler.class);
 
     private final EventParticipationRepository repo;
-    private final ParticipationMapper          mapper;
-    private final EventPublisher               eventPublisher;
+    private final ParticipationMapper mapper;
+    private final EventPublisher eventPublisher;
 
     public RecordResultHandler(EventParticipationRepository repo,
                                ParticipationMapper mapper,
                                EventPublisher eventPublisher) {
-        this.repo          = repo;
-        this.mapper        = mapper;
+        this.repo = repo;
+        this.mapper = mapper;
         this.eventPublisher = eventPublisher;
     }
 

@@ -10,5 +10,6 @@ public interface EventParticipationRepository
         extends JpaRepository<EventParticipationEntity, UUID> {
 
     List<EventParticipationEntity> findByPersonIdAndAsdId(UUID personId, UUID asdId);
+
     List<EventParticipationEntity> findByEventId(UUID eventId);
 }

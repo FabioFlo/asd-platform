@@ -9,4 +9,5 @@ public record CurrentSeasonResponse(
         String codice,
         LocalDate dataInizio,
         LocalDate dataFine
-) {}
+) {
+}

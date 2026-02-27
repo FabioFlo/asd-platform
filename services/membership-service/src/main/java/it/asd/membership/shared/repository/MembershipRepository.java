@@ -10,6 +10,8 @@ import java.util.UUID;
 
 public interface MembershipRepository extends JpaRepository<MembershipEntity, UUID> {
     Optional<MembershipEntity> findByPersonIdAndAsdIdAndSeasonId(UUID personId, UUID asdId, UUID seasonId);
+
     List<MembershipEntity> findByPersonIdAndAsdIdAndStato(UUID personId, UUID asdId, MembershipStatus stato);
+
     Optional<MembershipEntity> findByNumeroTessera(String numero);
 }

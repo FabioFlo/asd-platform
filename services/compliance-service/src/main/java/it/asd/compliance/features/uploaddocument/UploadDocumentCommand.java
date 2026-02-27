@@ -1,7 +1,9 @@
 package it.asd.compliance.features.uploaddocument;
 
+import it.asd.common.validation.annotation.ValidUUID;
 import it.asd.compliance.shared.entity.DocumentType;
 import jakarta.validation.constraints.NotNull;
+
 import java.time.LocalDate;
 import java.util.UUID;
 
@@ -10,8 +12,8 @@ import java.util.UUID;
  * Bean Validation annotations work on record components.
  */
 public record UploadDocumentCommand(
-        @NotNull UUID personId,
-        @NotNull UUID asdId,
+        @ValidUUID UUID personId,
+        @ValidUUID UUID asdId,
         @NotNull DocumentType tipo,
         LocalDate dataRilascio,
         LocalDate dataScadenza,
@@ -19,4 +21,5 @@ public record UploadDocumentCommand(
         String enteRilascio,
         String fileUrl,
         String note
-) {}
+) {
+}

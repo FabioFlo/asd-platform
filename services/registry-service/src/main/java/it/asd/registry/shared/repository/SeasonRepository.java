@@ -10,6 +10,8 @@ import java.util.UUID;
 
 public interface SeasonRepository extends JpaRepository<SeasonEntity, UUID> {
     Optional<SeasonEntity> findByAsdIdAndStato(UUID asdId, SeasonStatus stato);
+
     List<SeasonEntity> findByAsdIdOrderByDataInizioDesc(UUID asdId);
+
     boolean existsByAsdIdAndCodice(UUID asdId, String codice);
 }

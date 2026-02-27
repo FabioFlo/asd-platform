@@ -10,20 +10,25 @@ import java.util.UUID;
 
 /**
  * Local read-model of compliance eligibility per (person, asd) pair.
- *
+ * <p>
  * Warm path: populated by the async compliance.document.expired /
- *            compliance.document.renewed events.
+ * compliance.document.renewed events.
  * Cold path: populated by a sync call to Compliance at first registration.
- *
+ * <p>
  * If cache is absent AND the sync call fails → FAIL-CLOSED (deny registration).
  */
 @Entity
 @Table(name = "eligibility_cache",
-       uniqueConstraints = @UniqueConstraint(columnNames = {"person_id", "asd_id"}))
-@Getter @Setter @NoArgsConstructor @AllArgsConstructor @Builder
+        uniqueConstraints = @UniqueConstraint(columnNames = {"person_id", "asd_id"}))
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class EligibilityCacheEntity {
 
-    @Id @GeneratedValue(strategy = GenerationType.UUID)
+    @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
     @Column(name = "person_id", nullable = false)
@@ -37,18 +42,23 @@ public class EligibilityCacheEntity {
 
     @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name = "eligibility_blocking_docs",
-                     joinColumns = @JoinColumn(name = "cache_id"))
+            joinColumns = @JoinColumn(name = "cache_id"))
     @Column(name = "document_type")
     @Builder.Default
     private List<String> blockingDocuments = new ArrayList<>();
 
-    /** "sync_check" | "document.expired" | "document.renewed" */
+    /**
+     * "sync_check" | "document.expired" | "document.renewed"
+     */
     @Column(name = "source", nullable = false)
     private String source;
 
     @Column(name = "last_updated_at", nullable = false)
     private LocalDateTime lastUpdatedAt;
 
-    @PrePersist @PreUpdate
-    protected void touch() { lastUpdatedAt = LocalDateTime.now(); }
+    @PrePersist
+    @PreUpdate
+    protected void touch() {
+        lastUpdatedAt = LocalDateTime.now();
+    }
 }

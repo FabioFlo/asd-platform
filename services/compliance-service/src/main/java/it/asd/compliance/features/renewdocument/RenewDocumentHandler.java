@@ -15,11 +15,11 @@ import java.util.UUID;
 public class RenewDocumentHandler {
 
     private final DocumentRepository repository;
-    private final EventPublisher      eventPublisher;
+    private final EventPublisher eventPublisher;
 
     public RenewDocumentHandler(DocumentRepository repository,
                                 EventPublisher eventPublisher) {
-        this.repository    = repository;
+        this.repository = repository;
         this.eventPublisher = eventPublisher;
     }
 
@@ -37,7 +37,7 @@ public class RenewDocumentHandler {
         doc.setDataRilascio(cmd.newDataRilascio());
         doc.setDataScadenza(cmd.newDataScadenza());
         doc.setStato(DocumentStatus.VALID);
-        if (cmd.newNumero()  != null) doc.setNumero(cmd.newNumero());
+        if (cmd.newNumero() != null) doc.setNumero(cmd.newNumero());
         if (cmd.newFileUrl() != null) doc.setFileUrl(cmd.newFileUrl());
         repository.save(doc);
 

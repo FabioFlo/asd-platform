@@ -4,7 +4,6 @@ import it.asd.common.kafka.EventPublisher;
 import it.asd.events.EventEnvelope;
 import it.asd.events.KafkaTopics;
 import it.asd.finance.shared.TestFixtures;
-import it.asd.finance.shared.entity.FeeRuleEntity;
 import it.asd.finance.shared.entity.PaymentEntity;
 import it.asd.finance.shared.entity.PaymentStatus;
 import it.asd.finance.shared.entity.PaymentType;
@@ -25,9 +24,7 @@ import java.math.BigDecimal;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyBoolean;
-import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)

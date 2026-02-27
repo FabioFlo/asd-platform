@@ -11,7 +11,7 @@ import java.util.UUID;
  */
 public sealed interface RecordResultResult
         permits RecordResultResult.Recorded,
-                RecordResultResult.NotFound {
+        RecordResultResult.NotFound {
 
     record Recorded(
             UUID participationId,
@@ -21,7 +21,9 @@ public sealed interface RecordResultResult
             Integer posizione,
             BigDecimal punteggio,
             Map<String, Object> resultData
-    ) implements RecordResultResult {}
+    ) implements RecordResultResult {
+    }
 
-    record NotFound(UUID participationId) implements RecordResultResult {}
+    record NotFound(UUID participationId) implements RecordResultResult {
+    }
 }

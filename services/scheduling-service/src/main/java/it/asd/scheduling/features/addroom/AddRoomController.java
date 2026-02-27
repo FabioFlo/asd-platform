@@ -1,14 +1,17 @@
 package it.asd.scheduling.features.addroom;
 
 import it.asd.common.exception.ApiErrors;
+import it.asd.common.validation.annotation.ValidUUID;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ProblemDetail;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
 
+@Validated
 @RestController
 @RequestMapping("/scheduling/venues/{venueId}/rooms")
 public class AddRoomController {
@@ -21,7 +24,7 @@ public class AddRoomController {
 
     @PostMapping
     public ResponseEntity<?> add(
-            @PathVariable UUID venueId,
+            @PathVariable @ValidUUID UUID venueId,
             @Valid @RequestBody AddRoomCommand cmd) {
 
         var effectiveCmd = new AddRoomCommand(venueId, cmd.nome(), cmd.capienza(), cmd.note());

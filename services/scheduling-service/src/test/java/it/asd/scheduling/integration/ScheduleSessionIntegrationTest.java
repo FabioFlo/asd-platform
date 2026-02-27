@@ -16,8 +16,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Component;
 
-import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -131,7 +129,9 @@ class ScheduleSessionIntegrationTest extends BaseIntegrationTest {
         assertThat(response.getStatusCode().value()).isEqualTo(422);
     }
 
-    /** Captures session.scheduled Kafka envelopes for integration test assertions. */
+    /**
+     * Captures session.scheduled Kafka envelopes for integration test assertions.
+     */
     @Component
     static class SessionScheduledEventCapture {
 

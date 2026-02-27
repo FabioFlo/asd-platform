@@ -113,7 +113,9 @@ class ActivateSeasonIntegrationTest extends BaseIntegrationTest {
         assertThat(response.getStatusCode().value()).isEqualTo(409);
     }
 
-    /** Captures season.activated Kafka envelopes for integration test assertions. */
+    /**
+     * Captures season.activated Kafka envelopes for integration test assertions.
+     */
     @Component
     static class SeasonActivatedEventCapture {
 

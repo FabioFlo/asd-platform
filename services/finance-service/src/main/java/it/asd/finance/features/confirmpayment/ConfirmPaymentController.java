@@ -1,14 +1,17 @@
 package it.asd.finance.features.confirmpayment;
 
 import it.asd.common.exception.ApiErrors;
+import it.asd.common.validation.annotation.ValidUUID;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ProblemDetail;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
 
+@Validated
 @RestController
 @RequestMapping("/finance/payments/{paymentId}/confirm")
 public class ConfirmPaymentController {
@@ -21,7 +24,7 @@ public class ConfirmPaymentController {
 
     @PostMapping
     public ResponseEntity<?> confirm(
-            @PathVariable UUID paymentId,
+            @PathVariable @ValidUUID UUID paymentId,
             @Valid @RequestBody ConfirmPaymentCommand cmd) {
 
         var effectiveCmd = new ConfirmPaymentCommand(

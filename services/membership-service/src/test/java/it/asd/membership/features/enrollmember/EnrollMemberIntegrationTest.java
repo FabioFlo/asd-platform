@@ -45,9 +45,9 @@ class EnrollMemberIntegrationTest extends BaseIntegrationTest {
     @MockBean
     private RegistryClient registryClient;
 
-    private static final UUID PERSON_ID  = UUID.randomUUID();
-    private static final UUID ASD_ID     = UUID.randomUUID();
-    private static final UUID SEASON_ID  = UUID.randomUUID();
+    private static final UUID PERSON_ID = UUID.randomUUID();
+    private static final UUID ASD_ID = UUID.randomUUID();
+    private static final UUID SEASON_ID = UUID.randomUUID();
 
     @BeforeEach
     void setUp() {
@@ -114,7 +114,9 @@ class EnrollMemberIntegrationTest extends BaseIntegrationTest {
         assertThat(secondResponse.getStatusCode().value()).isEqualTo(409);
     }
 
-    /** Captures membership.activated Kafka envelopes for integration test assertions. */
+    /**
+     * Captures membership.activated Kafka envelopes for integration test assertions.
+     */
     @Component
     static class MembershipActivatedEventCapture {
 

@@ -38,10 +38,10 @@ public class KafkaConfig {
     @Bean
     public ProducerFactory<String, EventEnvelope> producerFactory(ObjectMapper kafkaObjectMapper) {
         var props = Map.<String, Object>of(
-                ProducerConfig.BOOTSTRAP_SERVERS_CONFIG,    bootstrapServers,
-                ProducerConfig.ENABLE_IDEMPOTENCE_CONFIG,   true,
-                ProducerConfig.ACKS_CONFIG,                 "all",
-                ProducerConfig.RETRIES_CONFIG,              3
+                ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers,
+                ProducerConfig.ENABLE_IDEMPOTENCE_CONFIG, true,
+                ProducerConfig.ACKS_CONFIG, "all",
+                ProducerConfig.RETRIES_CONFIG, 3
         );
         return new DefaultKafkaProducerFactory<>(props,
                 new StringSerializer(),
@@ -57,10 +57,10 @@ public class KafkaConfig {
     @Bean
     public ConsumerFactory<String, EventEnvelope> consumerFactory(ObjectMapper kafkaObjectMapper) {
         var props = Map.<String, Object>of(
-                ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG,    bootstrapServers,
-                ConsumerConfig.GROUP_ID_CONFIG,             applicationName,
-                ConsumerConfig.AUTO_OFFSET_RESET_CONFIG,    "earliest",
-                ConsumerConfig.ENABLE_AUTO_COMMIT_CONFIG,   false
+                ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers,
+                ConsumerConfig.GROUP_ID_CONFIG, applicationName,
+                ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest",
+                ConsumerConfig.ENABLE_AUTO_COMMIT_CONFIG, false
         );
         var deser = new JsonDeserializer<>(EventEnvelope.class, kafkaObjectMapper, false);
         deser.addTrustedPackages("it.asd.events.*");

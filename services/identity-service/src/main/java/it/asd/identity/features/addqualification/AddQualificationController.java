@@ -1,14 +1,17 @@
 package it.asd.identity.features.addqualification;
 
 import it.asd.common.exception.ApiErrors;
+import it.asd.common.validation.annotation.ValidUUID;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ProblemDetail;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
 
+@Validated
 @RestController
 @RequestMapping("/identity/persons/{personId}/qualifications")
 public class AddQualificationController {
@@ -21,7 +24,7 @@ public class AddQualificationController {
 
     @PostMapping
     public ResponseEntity<?> add(
-            @PathVariable UUID personId,
+            @PathVariable @ValidUUID UUID personId,
             @Valid @RequestBody AddQualificationCommand cmd) {
 
         var effectiveCmd = new AddQualificationCommand(

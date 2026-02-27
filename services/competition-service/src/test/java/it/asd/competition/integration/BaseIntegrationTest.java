@@ -27,10 +27,10 @@ public abstract class BaseIntegrationTest {
 
     @DynamicPropertySource
     static void overrideProperties(DynamicPropertyRegistry registry) {
-        registry.add("spring.datasource.url",           postgres::getJdbcUrl);
-        registry.add("spring.datasource.username",      postgres::getUsername);
-        registry.add("spring.datasource.password",      postgres::getPassword);
-        registry.add("spring.kafka.bootstrap-servers",  kafka::getBootstrapServers);
+        registry.add("spring.datasource.url", postgres::getJdbcUrl);
+        registry.add("spring.datasource.username", postgres::getUsername);
+        registry.add("spring.datasource.password", postgres::getPassword);
+        registry.add("spring.kafka.bootstrap-servers", kafka::getBootstrapServers);
         // Point ComplianceClient at a non-existent URL so fail-closed behaviour is testable.
         // Individual tests that need eligible=true must @MockBean ComplianceClient.
         registry.add("services.compliance.base-url",

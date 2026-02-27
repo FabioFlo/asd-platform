@@ -6,16 +6,15 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Set;
 
 /**
  * Handles eligibility checks for the Compliance service.
- *
+ * <p>
  * FAIL-CLOSED CONTRACT (enforced by caller — ComplianceClient in competition-service):
  * If this endpoint is unreachable, the competition service MUST deny registration.
  * This handler never needs to know about that — it just checks the documents.
- *
+ * <p>
  * Uses read-only transaction: no writes, just queries.
  */
 @Component
@@ -35,7 +34,7 @@ public class CheckEligibilityHandler {
                 ? DocumentType.AGONISTIC_REQUIRED
                 : DocumentType.RECREATIONAL_REQUIRED;
 
-        var blocking     = new ArrayList<String>();
+        var blocking = new ArrayList<String>();
         var expiringSoon = new ArrayList<String>();
 
         for (var type : required) {
@@ -54,7 +53,7 @@ public class CheckEligibilityHandler {
             }
         }
 
-        if (!blocking.isEmpty())     return new EligibilityResult.Ineligible(blocking);
+        if (!blocking.isEmpty()) return new EligibilityResult.Ineligible(blocking);
         if (!expiringSoon.isEmpty()) return new EligibilityResult.ExpiringSoon(expiringSoon);
         return new EligibilityResult.Eligible();
     }

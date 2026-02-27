@@ -16,13 +16,18 @@ import java.util.UUID;
  */
 @Entity
 @Table(name = "event_participation")
-@Getter @Setter @NoArgsConstructor @AllArgsConstructor @Builder
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class EventParticipationEntity {
 
-    @Id @GeneratedValue(strategy = GenerationType.UUID)
+    @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-    @Column(name = "event_id",   nullable = false)
+    @Column(name = "event_id", nullable = false)
     private UUID eventId;
 
     @Column(name = "person_id")
@@ -60,6 +65,13 @@ public class EventParticipationEntity {
     @Column(name = "updated_at", nullable = false)
     private LocalDateTime updatedAt;
 
-    @PrePersist  protected void onCreate() { createdAt = updatedAt = LocalDateTime.now(); }
-    @PreUpdate   protected void onUpdate() { updatedAt = LocalDateTime.now(); }
+    @PrePersist
+    protected void onCreate() {
+        createdAt = updatedAt = LocalDateTime.now();
+    }
+
+    @PreUpdate
+    protected void onUpdate() {
+        updatedAt = LocalDateTime.now();
+    }
 }

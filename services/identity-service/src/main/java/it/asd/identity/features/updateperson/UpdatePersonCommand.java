@@ -1,11 +1,11 @@
 package it.asd.identity.features.updateperson;
 
-import jakarta.validation.constraints.NotNull;
+import it.asd.common.validation.annotation.ValidUUID;
 
 import java.util.UUID;
 
 public record UpdatePersonCommand(
-        @NotNull UUID personId,
+        @ValidUUID UUID personId,
         String nome,
         String cognome,
         String email,
@@ -14,4 +14,5 @@ public record UpdatePersonCommand(
         String citta,
         String provincia,
         String cap
-) {}
+) {
+}

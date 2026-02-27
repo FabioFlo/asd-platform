@@ -16,20 +16,20 @@ public interface DocumentRepository extends JpaRepository<DocumentEntity, UUID> 
     List<DocumentEntity> findByPersonIdAndAsdId(UUID personId, UUID asdId);
 
     @Query("""
-           SELECT d FROM DocumentEntity d
-           WHERE d.personId = :personId AND d.asdId = :asdId
-             AND d.tipo = :tipo AND d.stato = 'VALID'
-           ORDER BY d.dataScadenza DESC LIMIT 1
-           """)
+            SELECT d FROM DocumentEntity d
+            WHERE d.personId = :personId AND d.asdId = :asdId
+              AND d.tipo = :tipo AND d.stato = 'VALID'
+            ORDER BY d.dataScadenza DESC LIMIT 1
+            """)
     Optional<DocumentEntity> findActiveByPersonAsdAndType(
             @Param("personId") UUID personId,
-            @Param("asdId")    UUID asdId,
-            @Param("tipo")     DocumentType tipo);
+            @Param("asdId") UUID asdId,
+            @Param("tipo") DocumentType tipo);
 
     @Query("""
-           SELECT d FROM DocumentEntity d
-           WHERE d.stato IN ('VALID', 'EXPIRING_SOON')
-             AND d.dataScadenza <= :threshold
-           """)
+            SELECT d FROM DocumentEntity d
+            WHERE d.stato IN ('VALID', 'EXPIRING_SOON')
+              AND d.dataScadenza <= :threshold
+            """)
     List<DocumentEntity> findExpiringOrExpired(@Param("threshold") LocalDate threshold);
 }

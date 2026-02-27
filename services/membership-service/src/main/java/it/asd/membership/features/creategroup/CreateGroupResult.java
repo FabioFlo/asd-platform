@@ -5,6 +5,9 @@ import java.util.UUID;
 public sealed interface CreateGroupResult
         permits CreateGroupResult.Created, CreateGroupResult.DuplicateName {
 
-    record Created(UUID groupId) implements CreateGroupResult {}
-    record DuplicateName(String nome) implements CreateGroupResult {}
+    record Created(UUID groupId) implements CreateGroupResult {
+    }
+
+    record DuplicateName(String nome) implements CreateGroupResult {
+    }
 }

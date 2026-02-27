@@ -8,11 +8,16 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "groups",
-       uniqueConstraints = @UniqueConstraint(columnNames = {"asd_id", "season_id", "nome"}))
-@Getter @Setter @NoArgsConstructor @AllArgsConstructor @Builder
+        uniqueConstraints = @UniqueConstraint(columnNames = {"asd_id", "season_id", "nome"}))
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class GroupEntity {
 
-    @Id @GeneratedValue(strategy = GenerationType.UUID)
+    @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
     @Column(name = "asd_id", nullable = false)
@@ -42,8 +47,12 @@ public class GroupEntity {
     private LocalDateTime updatedAt;
 
     @PrePersist
-    protected void onCreate() { createdAt = updatedAt = LocalDateTime.now(); }
+    protected void onCreate() {
+        createdAt = updatedAt = LocalDateTime.now();
+    }
 
     @PreUpdate
-    protected void onUpdate() { updatedAt = LocalDateTime.now(); }
+    protected void onUpdate() {
+        updatedAt = LocalDateTime.now();
+    }
 }

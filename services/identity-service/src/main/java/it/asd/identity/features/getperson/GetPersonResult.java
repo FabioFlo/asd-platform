@@ -7,6 +7,9 @@ import java.util.UUID;
 public sealed interface GetPersonResult
         permits GetPersonResult.Found, GetPersonResult.NotFound {
 
-    record Found(PersonResponse response) implements GetPersonResult {}
-    record NotFound(UUID personId) implements GetPersonResult {}
+    record Found(PersonResponse response) implements GetPersonResult {
+    }
+
+    record NotFound(UUID personId) implements GetPersonResult {
+    }
 }

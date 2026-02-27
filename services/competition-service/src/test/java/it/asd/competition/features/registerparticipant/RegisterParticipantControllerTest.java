@@ -1,6 +1,7 @@
 package it.asd.competition.features.registerparticipant;
 
 import it.asd.common.exception.GlobalExceptionHandler;
+import it.asd.common.exception.ValidatorExceptionHandler;
 import it.asd.competition.shared.TestFixtures;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
@@ -21,7 +22,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @WebMvcTest(RegisterParticipantController.class)
-@Import(GlobalExceptionHandler.class)
+@Import({GlobalExceptionHandler.class, ValidatorExceptionHandler.class})
 @DisplayName("RegisterParticipantController")
 @Tag("unit")
 class RegisterParticipantControllerTest {
@@ -32,8 +33,8 @@ class RegisterParticipantControllerTest {
     @MockBean
     private RegisterParticipantHandler handler;
 
-    private static final UUID EVENT_ID  = TestFixtures.EVENT_ID;
-    private static final UUID ASD_ID    = TestFixtures.ASD_ID;
+    private static final UUID EVENT_ID = TestFixtures.EVENT_ID;
+    private static final UUID ASD_ID = TestFixtures.ASD_ID;
     private static final UUID SEASON_ID = TestFixtures.SEASON_ID;
     private static final UUID PERSON_ID = TestFixtures.PERSON_ID;
 

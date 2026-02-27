@@ -17,4 +17,5 @@ public record RegisterPersonCommand(
         String citta,
         String provincia,
         String cap
-) {}
+) {
+}

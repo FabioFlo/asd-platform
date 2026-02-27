@@ -19,23 +19,23 @@ import java.util.UUID;
 public class ExpiryCheckHandler {
 
     private static final Logger log = LoggerFactory.getLogger(ExpiryCheckHandler.class);
-    private static final int    EXPIRY_WARNING_DAYS = 30;
+    private static final int EXPIRY_WARNING_DAYS = 30;
 
     private final DocumentRepository repository;
-    private final EventPublisher      eventPublisher;
+    private final EventPublisher eventPublisher;
 
     public ExpiryCheckHandler(DocumentRepository repository,
-                               EventPublisher eventPublisher) {
-        this.repository    = repository;
+                              EventPublisher eventPublisher) {
+        this.repository = repository;
         this.eventPublisher = eventPublisher;
     }
 
     @Transactional
     public ExpiryCheckResult handle() {
-        var threshold   = LocalDate.now().plusDays(EXPIRY_WARNING_DAYS);
-        var docs        = repository.findExpiringOrExpired(threshold);
-        var failed      = new ArrayList<UUID>();
-        int expired     = 0;
+        var threshold = LocalDate.now().plusDays(EXPIRY_WARNING_DAYS);
+        var docs = repository.findExpiringOrExpired(threshold);
+        var failed = new ArrayList<UUID>();
+        int expired = 0;
         int expiringSoon = 0;
 
         for (var doc : docs) {

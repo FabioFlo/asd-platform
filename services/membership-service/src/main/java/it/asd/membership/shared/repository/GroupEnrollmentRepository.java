@@ -10,5 +10,6 @@ import java.util.UUID;
 
 public interface GroupEnrollmentRepository extends JpaRepository<GroupEnrollmentEntity, UUID> {
     Optional<GroupEnrollmentEntity> findByPersonIdAndGroupIdAndSeasonId(UUID personId, UUID groupId, UUID seasonId);
+
     List<GroupEnrollmentEntity> findByGroupIdAndSeasonIdAndStato(UUID groupId, UUID seasonId, EnrollmentStatus stato);
 }

@@ -12,13 +12,13 @@ import org.springframework.stereotype.Component;
 
 /**
  * Keeps the eligibility cache warm from async compliance events.
- *
+ * <p>
  * When a document expires → mark person ineligible in cache.
  * When a document renews  → remove that blocker from cache.
- *
+ * <p>
  * This means RegisterParticipantHandler rarely hits Compliance sync —
  * only on the very first registration attempt (cold cache).
- *
+ * <p>
  * Manual ack: if processing fails, we do NOT ack → Kafka redelivers.
  * After N failures the message goes to the dead-letter topic (configure
  * a DeadLetterPublishingRecoverer in production).

@@ -6,5 +6,6 @@ import java.util.UUID;
 public sealed interface OverdueScanResult
         permits OverdueScanResult.Summary {
 
-    record Summary(int markedOverdue, List<UUID> failed) implements OverdueScanResult {}
+    record Summary(int markedOverdue, List<UUID> failed) implements OverdueScanResult {
+    }
 }

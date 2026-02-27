@@ -6,15 +6,15 @@
 
 ## What changed from v1
 
-| Concern | v1 | v2 |
-|---|---|---|
-| Java version | 21 | **25 LTS** |
-| Spring Boot | 3.3 | **3.5.x** |
-| Architecture | Layered (controller/service/repo) | **Vertical Slice** |
-| Result types | Exceptions + booleans | **Sealed interfaces** |
-| Lombok | Everywhere | **JPA entities only** |
-| DTOs/commands | Mixed | **Java records throughout** |
-| MapStruct | Everywhere | **Only for complex mappings** |
+| Concern       | v1                                | v2                            |
+|---------------|-----------------------------------|-------------------------------|
+| Java version  | 21                                | **25 LTS**                    |
+| Spring Boot   | 3.3                               | **3.5.x**                     |
+| Architecture  | Layered (controller/service/repo) | **Vertical Slice**            |
+| Result types  | Exceptions + booleans             | **Sealed interfaces**         |
+| Lombok        | Everywhere                        | **JPA entities only**         |
+| DTOs/commands | Mixed                             | **Java records throughout**   |
+| MapStruct     | Everywhere                        | **Only for complex mappings** |
 
 ---
 
@@ -77,15 +77,15 @@ return switch (handler.handle(cmd)) {
 
 ## Services Overview
 
-| Service | Port | Owns | Depends on |
-|---|---|---|---|
-| `registry-service` | 8081 | ASD entity, Seasons | — |
-| `identity-service` | 8082 | Person, Qualifications | — |
-| `membership-service` | 8083 | Memberships, Groups, Enrollments | registry, identity (sync HTTP) |
-| `scheduling-service` | 8084 | Venues, Rooms, Sessions | registry; group cache via Kafka |
-| `competition-service` | 8085 | Event participations, Results | compliance (sync HTTP, fail-closed) |
-| `compliance-service` | 8086 | Documents, Eligibility | — |
-| `finance-service` | 8087 | Payments, Fee rules | purely event-driven, no sync calls |
+| Service               | Port | Owns                             | Depends on                          |
+|-----------------------|------|----------------------------------|-------------------------------------|
+| `registry-service`    | 8081 | ASD entity, Seasons              | —                                   |
+| `identity-service`    | 8082 | Person, Qualifications           | —                                   |
+| `membership-service`  | 8083 | Memberships, Groups, Enrollments | registry, identity (sync HTTP)      |
+| `scheduling-service`  | 8084 | Venues, Rooms, Sessions          | registry; group cache via Kafka     |
+| `competition-service` | 8085 | Event participations, Results    | compliance (sync HTTP, fail-closed) |
+| `compliance-service`  | 8086 | Documents, Eligibility           | —                                   |
+| `finance-service`     | 8087 | Payments, Fee rules              | purely event-driven, no sync calls  |
 
 ---
 
@@ -226,27 +226,27 @@ asd-platform/
 
 ## Sealed Result Inventory
 
-| Feature | Service | Sealed Cases |
-|---|---|---|
-| `CreateAsdResult` | registry | `Created` · `DuplicateCodiceFiscale` |
-| `ActivateSeasonResult` | registry | `Activated` · `AsdNotFound` · `AlreadyHasActiveSeason` · `InvalidDateRange` · `DuplicateCodice` |
-| `GetCurrentSeasonResult` | registry | `Found` · `NoActiveSeason` |
-| `RegisterPersonResult` | identity | `Registered` · `DuplicateCodiceFiscale` · `DuplicateEmail` |
-| `UpdatePersonResult` | identity | `Updated` · `NotFound` · `DuplicateEmail` |
-| `AddQualificationResult` | identity | `Added` · `PersonNotFound` |
-| `EnrollMemberResult` | membership | `Enrolled` · `PersonNotFound` · `AsdNotFound` · `SeasonNotFound` · `AlreadyEnrolled` |
-| `CreateGroupResult` | membership | `Created` · `DuplicateName` |
-| `AddToGroupResult` | membership | `Added` · `GroupNotFound` · `NotAMember` · `AlreadyInGroup` |
-| `CreateVenueResult` | scheduling | `Created` · `DuplicateName` |
-| `AddRoomResult` | scheduling | `Added` · `VenueNotFound` · `DuplicateName` |
-| `ScheduleSessionResult` | scheduling | `Scheduled` · `VenueNotFound` · `RoomNotFound` · `GroupNotFound` · `TimeConflict` · `InvalidTimeRange` |
-| `RegisterParticipantResult` | competition | `Registered` · `Ineligible` · `AlreadyRegistered` · `ComplianceUnavailable` |
-| `RecordResultResult` | competition | `Recorded` · `NotFound` |
-| `UploadDocumentResult` | compliance | `Success` · `InvalidDateRange` |
-| `EligibilityResult` | compliance | `Eligible` · `ExpiringSoon` · `Ineligible` |
-| `RenewDocumentResult` | compliance | `Renewed` · `NotFound` · `InvalidDateRange` |
-| `ExpiryCheckResult` | compliance | `Summary` |
-| `ConfirmPaymentResult` | finance | `Confirmed` · `NotFound` · `AlreadyConfirmed` · `AlreadyCancelled` |
+| Feature                     | Service     | Sealed Cases                                                                                           |
+|-----------------------------|-------------|--------------------------------------------------------------------------------------------------------|
+| `CreateAsdResult`           | registry    | `Created` · `DuplicateCodiceFiscale`                                                                   |
+| `ActivateSeasonResult`      | registry    | `Activated` · `AsdNotFound` · `AlreadyHasActiveSeason` · `InvalidDateRange` · `DuplicateCodice`        |
+| `GetCurrentSeasonResult`    | registry    | `Found` · `NoActiveSeason`                                                                             |
+| `RegisterPersonResult`      | identity    | `Registered` · `DuplicateCodiceFiscale` · `DuplicateEmail`                                             |
+| `UpdatePersonResult`        | identity    | `Updated` · `NotFound` · `DuplicateEmail`                                                              |
+| `AddQualificationResult`    | identity    | `Added` · `PersonNotFound`                                                                             |
+| `EnrollMemberResult`        | membership  | `Enrolled` · `PersonNotFound` · `AsdNotFound` · `SeasonNotFound` · `AlreadyEnrolled`                   |
+| `CreateGroupResult`         | membership  | `Created` · `DuplicateName`                                                                            |
+| `AddToGroupResult`          | membership  | `Added` · `GroupNotFound` · `NotAMember` · `AlreadyInGroup`                                            |
+| `CreateVenueResult`         | scheduling  | `Created` · `DuplicateName`                                                                            |
+| `AddRoomResult`             | scheduling  | `Added` · `VenueNotFound` · `DuplicateName`                                                            |
+| `ScheduleSessionResult`     | scheduling  | `Scheduled` · `VenueNotFound` · `RoomNotFound` · `GroupNotFound` · `TimeConflict` · `InvalidTimeRange` |
+| `RegisterParticipantResult` | competition | `Registered` · `Ineligible` · `AlreadyRegistered` · `ComplianceUnavailable`                            |
+| `RecordResultResult`        | competition | `Recorded` · `NotFound`                                                                                |
+| `UploadDocumentResult`      | compliance  | `Success` · `InvalidDateRange`                                                                         |
+| `EligibilityResult`         | compliance  | `Eligible` · `ExpiringSoon` · `Ineligible`                                                             |
+| `RenewDocumentResult`       | compliance  | `Renewed` · `NotFound` · `InvalidDateRange`                                                            |
+| `ExpiryCheckResult`         | compliance  | `Summary`                                                                                              |
+| `ConfirmPaymentResult`      | finance     | `Confirmed` · `NotFound` · `AlreadyConfirmed` · `AlreadyCancelled`                                     |
 
 ---
 
@@ -382,24 +382,27 @@ If you have WSL 2 installed, the `.sh` scripts work without any changes. Run the
 ./scripts/rebuild-service.sh competition
 ```
 
-> **Tip:** Make sure Docker Desktop has **"Use the WSL 2 based engine"** enabled in Settings → General, and your distro is enabled under Settings → Resources → WSL Integration. This lets the WSL terminal share the same Docker daemon as Windows.
+> **Tip:** Make sure Docker Desktop has **"Use the WSL 2 based engine"** enabled in Settings → General, and your distro
+> is enabled under Settings → Resources → WSL Integration. This lets the WSL terminal share the same Docker daemon as
+> Windows.
 
 ---
 
 ### Prerequisites (Windows)
 
-| Tool | Where to get it | Required for |
-|---|---|---|
-| Java 25 | [Adoptium](https://adoptium.net) or `winget install EclipseAdoptium.Temurin.25.JDK` | Maven build |
-| Maven 3.9+ | [maven.apache.org](https://maven.apache.org/download.cgi) or `winget install Apache.Maven` | Maven build |
-| Docker Desktop | [docker.com](https://www.docker.com/products/docker-desktop/) | All Docker commands |
-| WSL 2 *(optional)* | `wsl --install` in PowerShell as Administrator | Option B only |
+| Tool               | Where to get it                                                                            | Required for        |
+|--------------------|--------------------------------------------------------------------------------------------|---------------------|
+| Java 25            | [Adoptium](https://adoptium.net) or `winget install EclipseAdoptium.Temurin.25.JDK`        | Maven build         |
+| Maven 3.9+         | [maven.apache.org](https://maven.apache.org/download.cgi) or `winget install Apache.Maven` | Maven build         |
+| Docker Desktop     | [docker.com](https://www.docker.com/products/docker-desktop/)                              | All Docker commands |
+| WSL 2 *(optional)* | `wsl --install` in PowerShell as Administrator                                             | Option B only       |
 
 ---
 
 ## Key API Endpoints
 
 ### Registry (port 8081)
+
 ```
 POST /registry/asd                              Create an ASD
 POST /registry/asd/{asdId}/seasons             Activate a season
@@ -407,6 +410,7 @@ GET  /registry/asd/{asdId}/season/current      Get the active season
 ```
 
 ### Identity (port 8082)
+
 ```
 POST  /identity/persons                         Register a person
 PATCH /identity/persons/{personId}              Update person details
@@ -415,6 +419,7 @@ POST  /identity/persons/{personId}/qualifications  Add a qualification
 ```
 
 ### Membership (port 8083)
+
 ```
 POST /membership/members                        Enroll a member in an ASD
 POST /membership/groups                         Create a group (team/course)
@@ -422,6 +427,7 @@ POST /membership/groups/{groupId}/members       Add a person to a group
 ```
 
 ### Scheduling (port 8084)
+
 ```
 POST /scheduling/venues                         Create a venue
 POST /scheduling/venues/{venueId}/rooms         Add a room to a venue
@@ -429,6 +435,7 @@ POST /scheduling/sessions                       Schedule a session
 ```
 
 ### Compliance (port 8086)
+
 ```
 POST /compliance/persons/{id}/documents         Upload a document
 GET  /compliance/persons/{id}/eligibility       Eligibility check (fail-closed source)
@@ -436,12 +443,14 @@ POST /compliance/documents/{id}/renew           Renew a document
 ```
 
 ### Competition (port 8085)
+
 ```
 POST /competition/events/{id}/participants      Register a participant
 PUT  /competition/participants/{id}/result      Record a result
 ```
 
 ### Finance (port 8087)
+
 ```
 POST /finance/payments/{paymentId}/confirm      Confirm a payment
 ```
@@ -474,12 +483,12 @@ POST /finance/payments/{paymentId}/confirm      Confirm a payment
 
 ## Environment Variables
 
-| Variable | Default | Used by |
-|---|---|---|
-| `DB_HOST` | `localhost` | all services |
-| `DB_USER` | `asd` | all services |
-| `DB_PASS` | `asd` | all services |
-| `KAFKA_SERVERS` | `localhost:9092` | all services |
+| Variable                 | Default                 | Used by             |
+|--------------------------|-------------------------|---------------------|
+| `DB_HOST`                | `localhost`             | all services        |
+| `DB_USER`                | `asd`                   | all services        |
+| `DB_PASS`                | `asd`                   | all services        |
+| `KAFKA_SERVERS`          | `localhost:9092`        | all services        |
 | `COMPLIANCE_SERVICE_URL` | `http://localhost:8086` | competition-service |
-| `IDENTITY_SERVICE_URL` | `http://localhost:8082` | membership-service |
-| `REGISTRY_SERVICE_URL` | `http://localhost:8081` | membership-service |
+| `IDENTITY_SERVICE_URL`   | `http://localhost:8082` | membership-service  |
+| `REGISTRY_SERVICE_URL`   | `http://localhost:8081` | membership-service  |

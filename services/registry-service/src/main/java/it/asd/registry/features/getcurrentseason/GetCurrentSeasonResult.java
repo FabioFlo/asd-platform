@@ -7,7 +7,9 @@ public sealed interface GetCurrentSeasonResult
         permits GetCurrentSeasonResult.Found, GetCurrentSeasonResult.NoActiveSeason {
 
     record Found(UUID seasonId, String codice, LocalDate dataInizio, LocalDate dataFine)
-            implements GetCurrentSeasonResult {}
+            implements GetCurrentSeasonResult {
+    }
 
-    record NoActiveSeason(UUID asdId) implements GetCurrentSeasonResult {}
+    record NoActiveSeason(UUID asdId) implements GetCurrentSeasonResult {
+    }
 }

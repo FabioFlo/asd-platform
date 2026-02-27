@@ -12,7 +12,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Instant;
-import java.time.LocalDate;
 import java.util.UUID;
 
 /**
@@ -26,11 +25,11 @@ public class UploadDocumentHandler {
     private static final Logger log = LoggerFactory.getLogger(UploadDocumentHandler.class);
 
     private final DocumentRepository repository;
-    private final EventPublisher      eventPublisher;
+    private final EventPublisher eventPublisher;
 
     public UploadDocumentHandler(DocumentRepository repository,
                                  EventPublisher eventPublisher) {
-        this.repository    = repository;
+        this.repository = repository;
         this.eventPublisher = eventPublisher;
     }
 

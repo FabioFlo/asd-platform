@@ -10,6 +10,8 @@ import java.util.UUID;
 
 public interface PaymentRepository extends JpaRepository<PaymentEntity, UUID> {
     List<PaymentEntity> findByPersonIdAndAsdId(UUID personId, UUID asdId);
+
     List<PaymentEntity> findByStatoAndDataScadenzaBefore(PaymentStatus stato, LocalDate date);
+
     boolean existsByTriggerEventId(UUID triggerEventId);
 }

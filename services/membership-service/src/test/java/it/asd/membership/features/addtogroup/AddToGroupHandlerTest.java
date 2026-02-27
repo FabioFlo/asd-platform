@@ -1,5 +1,6 @@
 package it.asd.membership.features.addtogroup;
 
+import it.asd.common.enums.AsdRole;
 import it.asd.common.kafka.EventPublisher;
 import it.asd.events.KafkaTopics;
 import it.asd.membership.shared.TestFixtures;
@@ -70,7 +71,7 @@ class AddToGroupHandlerTest {
             membership.setSeasonId(seasonId);
             membership.setStato(MembershipStatus.ACTIVE);
 
-            var cmd = new AddToGroupCommand(personId, groupId, seasonId, "Atleta", LocalDate.of(2024, 9, 15));
+            var cmd = new AddToGroupCommand(personId, groupId, seasonId, AsdRole.ATLETA, LocalDate.of(2024, 9, 15));
 
             when(groupRepository.findById(groupId)).thenReturn(Optional.of(group));
             when(membershipRepository.findByPersonIdAndAsdIdAndStato(personId, asdId, MembershipStatus.ACTIVE))
@@ -150,7 +151,7 @@ class AddToGroupHandlerTest {
             var seasonId = UUID.randomUUID();
 
             var group = TestFixtures.savedGroup(groupId, asdId);
-            var cmd = new AddToGroupCommand(personId, groupId, seasonId, "Atleta", LocalDate.of(2024, 9, 15));
+            var cmd = new AddToGroupCommand(personId, groupId, seasonId, AsdRole.ATLETA, LocalDate.of(2024, 9, 15));
 
             when(groupRepository.findById(groupId)).thenReturn(Optional.of(group));
             when(membershipRepository.findByPersonIdAndAsdIdAndStato(personId, asdId, MembershipStatus.ACTIVE))
@@ -199,7 +200,7 @@ class AddToGroupHandlerTest {
                     .updatedAt(LocalDateTime.now())
                     .build();
 
-            var cmd = new AddToGroupCommand(personId, groupId, seasonId, "Atleta", LocalDate.of(2024, 9, 15));
+            var cmd = new AddToGroupCommand(personId, groupId, seasonId, AsdRole.ATLETA, LocalDate.of(2024, 9, 15));
 
             when(groupRepository.findById(groupId)).thenReturn(Optional.of(group));
             when(membershipRepository.findByPersonIdAndAsdIdAndStato(personId, asdId, MembershipStatus.ACTIVE))

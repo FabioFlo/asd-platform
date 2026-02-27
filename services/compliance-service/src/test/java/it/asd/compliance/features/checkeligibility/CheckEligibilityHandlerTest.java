@@ -31,7 +31,7 @@ class CheckEligibilityHandlerTest {
     private CheckEligibilityHandler handler;
 
     private final UUID personId = TestFixtures.PERSON_ID;
-    private final UUID asdId    = TestFixtures.ASD_ID;
+    private final UUID asdId = TestFixtures.ASD_ID;
 
     @Nested
     @DisplayName("when all required documents are valid")

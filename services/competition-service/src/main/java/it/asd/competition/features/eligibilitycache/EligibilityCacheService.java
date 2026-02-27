@@ -12,8 +12,8 @@ import java.util.UUID;
 /**
  * Manages the local eligibility cache.
  * Updated from two sources:
- *   1. Sync check result (RegisterParticipantHandler cold path)
- *   2. Async Kafka events (ComplianceEventConsumer)
+ * 1. Sync check result (RegisterParticipantHandler cold path)
+ * 2. Async Kafka events (ComplianceEventConsumer)
  */
 @Component
 public class EligibilityCacheService {
@@ -28,7 +28,8 @@ public class EligibilityCacheService {
      * Wraps the raw entity in a typed record so callers
      * don't depend on the JPA entity directly.
      */
-    public record CachedEligibility(boolean isEligible, List<String> blockingDocuments) {}
+    public record CachedEligibility(boolean isEligible, List<String> blockingDocuments) {
+    }
 
     @Transactional(readOnly = true)
     public Optional<CachedEligibility> get(UUID personId, UUID asdId) {

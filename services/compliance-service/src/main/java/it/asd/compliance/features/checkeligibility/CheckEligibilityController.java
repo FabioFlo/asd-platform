@@ -1,6 +1,8 @@
 package it.asd.compliance.features.checkeligibility;
 
+import it.asd.common.validation.annotation.ValidUUID;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
@@ -14,6 +16,7 @@ import java.util.UUID;
  * Returns 200 regardless of eligibility (eligible: true/false in body).
  * Returns 5xx only on unexpected errors → triggers fail-closed in the caller.
  */
+@Validated
 @RestController
 @RequestMapping("/compliance/persons/{personId}/eligibility")
 public class CheckEligibilityController {
@@ -26,11 +29,11 @@ public class CheckEligibilityController {
 
     @GetMapping
     public ResponseEntity<EligibilityResponse> check(
-            @PathVariable UUID personId,
-            @RequestParam  UUID asdId,
+            @PathVariable @ValidUUID UUID personId,
+            @RequestParam @ValidUUID UUID asdId,
             @RequestParam(defaultValue = "true") boolean agonistic) {
 
-        var result   = handler.handle(new CheckEligibilityQuery(personId, asdId, agonistic));
+        var result = handler.handle(new CheckEligibilityQuery(personId, asdId, agonistic));
         var response = EligibilityResponse.from(result);
         return ResponseEntity.ok(response);
     }

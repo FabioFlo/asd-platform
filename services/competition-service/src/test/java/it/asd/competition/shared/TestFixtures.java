@@ -1,7 +1,7 @@
 package it.asd.competition.shared;
 
-import it.asd.competition.features.registerparticipant.RegisterParticipantCommand;
 import it.asd.competition.features.recordresult.RecordResultCommand;
+import it.asd.competition.features.registerparticipant.RegisterParticipantCommand;
 import it.asd.competition.shared.entity.EligibilityCacheEntity;
 import it.asd.competition.shared.entity.EventParticipationEntity;
 import it.asd.competition.shared.entity.ParticipationStatus;
@@ -14,25 +14,28 @@ import java.util.UUID;
 /**
  * Centralized test data for competition-service.
  * All test classes import from here — never build entities inline.
- *
+ * <p>
  * Keep builders minimal: use sensible defaults, let callers override
  * only what matters for their specific test case.
  */
 public final class TestFixtures {
 
-    private TestFixtures() {}
+    private TestFixtures() {
+    }
 
     // ── Well-known IDs ────────────────────────────────────────────────────────
 
-    public static final UUID EVENT_ID         = UUID.fromString("aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa");
-    public static final UUID ASD_ID           = UUID.fromString("bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb");
-    public static final UUID SEASON_ID        = UUID.fromString("cccccccc-cccc-cccc-cccc-cccccccccccc");
-    public static final UUID PERSON_ID        = UUID.fromString("dddddddd-dddd-dddd-dddd-dddddddddddd");
+    public static final UUID EVENT_ID = UUID.fromString("aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa");
+    public static final UUID ASD_ID = UUID.fromString("bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb");
+    public static final UUID SEASON_ID = UUID.fromString("cccccccc-cccc-cccc-cccc-cccccccccccc");
+    public static final UUID PERSON_ID = UUID.fromString("dddddddd-dddd-dddd-dddd-dddddddddddd");
     public static final UUID PARTICIPATION_ID = UUID.fromString("eeeeeeee-eeee-eeee-eeee-eeeeeeeeeeee");
 
     // ── RegisterParticipant commands ──────────────────────────────────────────
 
-    /** Valid individual (person-based) registration command. */
+    /**
+     * Valid individual (person-based) registration command.
+     */
     public static RegisterParticipantCommand validRegisterParticipantCommand() {
         return new RegisterParticipantCommand(
                 EVENT_ID,
@@ -45,7 +48,9 @@ public final class TestFixtures {
         );
     }
 
-    /** Team registration command (groupId set, personId null). */
+    /**
+     * Team registration command (groupId set, personId null).
+     */
     public static RegisterParticipantCommand teamRegisterParticipantCommand() {
         return new RegisterParticipantCommand(
                 EVENT_ID,

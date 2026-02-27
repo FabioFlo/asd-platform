@@ -27,9 +27,9 @@ public abstract class BaseIntegrationTest {
 
     @DynamicPropertySource
     static void overrideProperties(DynamicPropertyRegistry registry) {
-        registry.add("spring.datasource.url",          postgres::getJdbcUrl);
-        registry.add("spring.datasource.username",     postgres::getUsername);
-        registry.add("spring.datasource.password",     postgres::getPassword);
+        registry.add("spring.datasource.url", postgres::getJdbcUrl);
+        registry.add("spring.datasource.username", postgres::getUsername);
+        registry.add("spring.datasource.password", postgres::getPassword);
         registry.add("spring.kafka.bootstrap-servers", kafka::getBootstrapServers);
     }
 }

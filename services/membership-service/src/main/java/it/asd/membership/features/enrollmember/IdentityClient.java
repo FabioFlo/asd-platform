@@ -36,9 +36,12 @@ class IdentityClient {
     }
 
     record PersonApiResponse(UUID id, String codiceFiscale, String nome, String cognome,
-                             LocalDate dataNascita, String email, String stato) {}
+                             LocalDate dataNascita, String email, String stato) {
+    }
 
     static final class IdentityCallException extends RuntimeException {
-        IdentityCallException(String msg) { super(msg); }
+        IdentityCallException(String msg) {
+            super(msg);
+        }
     }
 }

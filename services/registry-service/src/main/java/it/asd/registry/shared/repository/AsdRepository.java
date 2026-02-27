@@ -10,5 +10,6 @@ import java.util.UUID;
 
 public interface AsdRepository extends JpaRepository<AsdEntity, UUID> {
     Optional<AsdEntity> findByCodiceFiscale(String cf);
+
     List<AsdEntity> findByStato(AsdStatus stato);
 }

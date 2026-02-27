@@ -1,16 +1,19 @@
 package it.asd.competition.features.recordresult;
 
 import it.asd.common.exception.ApiErrors;
+import it.asd.common.validation.annotation.ValidUUID;
 import it.asd.competition.shared.entity.EventParticipationEntity;
 import it.asd.competition.shared.entity.ParticipationStatus;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ProblemDetail;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
 
+@Validated
 @RestController
 @RequestMapping("/competition/participants/{participationId}/result")
 public class RecordResultController {
@@ -23,7 +26,7 @@ public class RecordResultController {
 
     @PutMapping
     public ResponseEntity<?> record(
-            @PathVariable UUID participationId,
+            @PathVariable @ValidUUID UUID participationId,
             @Valid @RequestBody RecordResultCommand cmd) {
 
         var effectiveCmd = new RecordResultCommand(

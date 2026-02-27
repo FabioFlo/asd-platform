@@ -1,6 +1,7 @@
 package it.asd.events.finance;
 
 import it.asd.events.DomainEvent;
+
 import java.math.BigDecimal;
 import java.time.Instant;
 import java.time.LocalDate;
@@ -11,6 +12,13 @@ public record PaymentCreatedEvent(
         UUID seasonId, String paymentType, BigDecimal importo,
         LocalDate dataScadenza, Instant occurredAt
 ) implements DomainEvent {
-    @Override public String aggregateId()   { return paymentId.toString(); }
-    @Override public String aggregateType() { return "PaymentEntity"; }
+    @Override
+    public String aggregateId() {
+        return paymentId.toString();
+    }
+
+    @Override
+    public String aggregateType() {
+        return "PaymentEntity";
+    }
 }

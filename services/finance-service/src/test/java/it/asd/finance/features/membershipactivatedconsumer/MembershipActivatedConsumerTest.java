@@ -4,7 +4,6 @@ import it.asd.common.kafka.EventPublisher;
 import it.asd.events.EventEnvelope;
 import it.asd.events.KafkaTopics;
 import it.asd.finance.shared.TestFixtures;
-import it.asd.finance.shared.entity.FeeRuleEntity;
 import it.asd.finance.shared.entity.PaymentEntity;
 import it.asd.finance.shared.entity.PaymentStatus;
 import it.asd.finance.shared.entity.PaymentType;
@@ -17,9 +16,7 @@ import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.kafka.support.Acknowledgment;
 

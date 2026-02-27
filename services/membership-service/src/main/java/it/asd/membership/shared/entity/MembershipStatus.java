@@ -1,3 +1,3 @@
 package it.asd.membership.shared.entity;
 
-public enum MembershipStatus { PENDING, ACTIVE, SUSPENDED, EXPIRED }
+public enum MembershipStatus {PENDING, ACTIVE, SUSPENDED, EXPIRED}

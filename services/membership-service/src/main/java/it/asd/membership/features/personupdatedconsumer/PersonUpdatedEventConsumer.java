@@ -39,9 +39,9 @@ public class PersonUpdatedEventConsumer {
             var cacheOpt = personCacheRepository.findByPersonId(evt.personId());
             if (cacheOpt.isPresent()) {
                 var cache = cacheOpt.get();
-                if (evt.nome() != null)   cache.setNome(evt.nome());
+                if (evt.nome() != null) cache.setNome(evt.nome());
                 if (evt.cognome() != null) cache.setCognome(evt.cognome());
-                if (evt.email() != null)  cache.setEmail(evt.email());
+                if (evt.email() != null) cache.setEmail(evt.email());
                 cache.setLastSyncedAt(LocalDateTime.now());
                 cache.setSource("person.updated");
                 personCacheRepository.save(cache);

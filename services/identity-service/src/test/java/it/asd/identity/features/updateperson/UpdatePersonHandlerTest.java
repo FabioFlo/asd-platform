@@ -3,7 +3,6 @@ package it.asd.identity.features.updateperson;
 import it.asd.common.kafka.EventPublisher;
 import it.asd.events.KafkaTopics;
 import it.asd.identity.shared.TestFixtures;
-import it.asd.identity.shared.entity.PersonEntity;
 import it.asd.identity.shared.repository.PersonRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;

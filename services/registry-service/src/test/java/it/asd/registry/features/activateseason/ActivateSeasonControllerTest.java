@@ -1,6 +1,7 @@
 package it.asd.registry.features.activateseason;
 
 import it.asd.common.exception.GlobalExceptionHandler;
+import it.asd.common.exception.ValidatorExceptionHandler;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
@@ -16,10 +17,11 @@ import java.util.UUID;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(ActivateSeasonController.class)
-@Import(GlobalExceptionHandler.class)
+@Import({GlobalExceptionHandler.class, ValidatorExceptionHandler.class})
 @DisplayName("ActivateSeasonController")
 @Tag("unit")
 class ActivateSeasonControllerTest {

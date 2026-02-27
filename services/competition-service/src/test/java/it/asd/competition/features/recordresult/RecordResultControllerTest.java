@@ -1,6 +1,7 @@
 package it.asd.competition.features.recordresult;
 
 import it.asd.common.exception.GlobalExceptionHandler;
+import it.asd.common.exception.ValidatorExceptionHandler;
 import it.asd.competition.shared.TestFixtures;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
@@ -16,13 +17,14 @@ import java.math.BigDecimal;
 import java.util.Map;
 import java.util.UUID;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(RecordResultController.class)
-@Import(GlobalExceptionHandler.class)
+@Import({GlobalExceptionHandler.class, ValidatorExceptionHandler.class})
 @DisplayName("RecordResultController")
 @Tag("unit")
 class RecordResultControllerTest {
@@ -34,7 +36,7 @@ class RecordResultControllerTest {
     private RecordResultHandler handler;
 
     private static final UUID PARTICIPATION_ID = TestFixtures.PARTICIPATION_ID;
-    private static final UUID PERSON_ID        = TestFixtures.PERSON_ID;
+    private static final UUID PERSON_ID = TestFixtures.PERSON_ID;
 
     // ── Recorded → 200 ───────────────────────────────────────────────────────
 

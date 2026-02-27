@@ -8,5 +8,6 @@ import java.util.UUID;
 
 public interface GroupRepository extends JpaRepository<GroupEntity, UUID> {
     List<GroupEntity> findByAsdIdAndSeasonId(UUID asdId, UUID seasonId);
+
     boolean existsByAsdIdAndSeasonIdAndNome(UUID asdId, UUID seasonId, String nome);
 }

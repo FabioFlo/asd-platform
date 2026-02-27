@@ -1,14 +1,16 @@
 package it.asd.competition.features.registerparticipant;
 
-import jakarta.validation.constraints.NotNull;
+import it.asd.common.validation.annotation.ValidUUID;
+
 import java.util.UUID;
 
 public record RegisterParticipantCommand(
-        @NotNull UUID eventId,
-        @NotNull UUID asdId,
-        @NotNull UUID seasonId,
+        @ValidUUID UUID eventId,
+        @ValidUUID UUID asdId,
+        @ValidUUID UUID seasonId,
         UUID personId,    // null for team events
         UUID groupId,     // null for individual events
         String categoria,
         boolean agonistic
-) {}
+) {
+}

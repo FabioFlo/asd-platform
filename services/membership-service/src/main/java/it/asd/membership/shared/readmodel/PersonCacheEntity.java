@@ -8,11 +8,16 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "person_cache",
-       uniqueConstraints = @UniqueConstraint(columnNames = {"person_id"}))
-@Getter @Setter @NoArgsConstructor @AllArgsConstructor @Builder
+        uniqueConstraints = @UniqueConstraint(columnNames = {"person_id"}))
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class PersonCacheEntity {
 
-    @Id @GeneratedValue(strategy = GenerationType.UUID)
+    @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
     @Column(name = "person_id", nullable = false, unique = true)

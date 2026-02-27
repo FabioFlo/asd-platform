@@ -12,5 +12,7 @@ public final class BusinessRuleViolationException extends RuntimeException {
         this.rule = rule;
     }
 
-    public String getRule() { return rule; }
+    public String getRule() {
+        return rule;
+    }
 }

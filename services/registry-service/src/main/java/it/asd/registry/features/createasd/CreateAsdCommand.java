@@ -12,4 +12,5 @@ public record CreateAsdCommand(
         String provincia,
         String email,
         String telefono
-) {}
+) {
+}

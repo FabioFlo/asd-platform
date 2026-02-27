@@ -1,6 +1,7 @@
 package it.asd.membership.features.addtogroup;
 
 import it.asd.common.exception.GlobalExceptionHandler;
+import it.asd.common.exception.ValidatorExceptionHandler;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
@@ -16,10 +17,11 @@ import java.util.UUID;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(AddToGroupController.class)
-@Import(GlobalExceptionHandler.class)
+@Import({GlobalExceptionHandler.class, ValidatorExceptionHandler.class})
 @DisplayName("AddToGroupController")
 @Tag("unit")
 class AddToGroupControllerTest {
@@ -37,7 +39,7 @@ class AddToGroupControllerTest {
               "personId": "11111111-1111-1111-1111-111111111111",
               "groupId": "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa",
               "seasonId": "22222222-2222-2222-2222-222222222222",
-              "ruolo": "Atleta",
+              "ruolo": "ATLETA",
               "dataIngresso": "2024-09-15"
             }
             """;

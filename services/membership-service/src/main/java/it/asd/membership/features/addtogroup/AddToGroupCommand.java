@@ -1,15 +1,18 @@
 package it.asd.membership.features.addtogroup;
 
-import jakarta.validation.constraints.NotBlank;
+import it.asd.common.enums.AsdRole;
+import it.asd.common.validation.annotation.ValidRole;
+import it.asd.common.validation.annotation.ValidUUID;
 import jakarta.validation.constraints.NotNull;
 
 import java.time.LocalDate;
 import java.util.UUID;
 
 public record AddToGroupCommand(
-        @NotNull UUID personId,
-        @NotNull UUID groupId,
-        @NotNull UUID seasonId,
-        @NotBlank String ruolo,
+        @ValidUUID UUID personId,
+        @ValidUUID UUID groupId,
+        @ValidUUID UUID seasonId,
+        @ValidRole AsdRole ruolo,
         @NotNull LocalDate dataIngresso
-) {}
+) {
+}

@@ -25,12 +25,13 @@ import static org.mockito.Mockito.when;
 
 /**
  * Integration test for the RegisterParticipant vertical slice.
- *
+ * <p>
  * ComplianceClient is package-private, so this test lives in the same package.
  * It still extends the public BaseIntegrationTest from the integration package.
- *
+ * <p>
  * ComplianceClient is a Spring @Component that makes HTTP calls to an external
  * service. In integration tests the compliance-service is not running, so we
+ *
  * @MockBean it to control eligibility answers.
  */
 @DisplayName("RegisterParticipant — integration")

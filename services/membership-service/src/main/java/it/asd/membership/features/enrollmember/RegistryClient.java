@@ -36,9 +36,12 @@ class RegistryClient {
     }
 
     record SeasonApiResponse(UUID seasonId, UUID asdId, String codice,
-                             LocalDate dataInizio, LocalDate dataFine) {}
+                             LocalDate dataInizio, LocalDate dataFine) {
+    }
 
     static final class RegistryCallException extends RuntimeException {
-        RegistryCallException(String msg) { super(msg); }
+        RegistryCallException(String msg) {
+            super(msg);
+        }
     }
 }

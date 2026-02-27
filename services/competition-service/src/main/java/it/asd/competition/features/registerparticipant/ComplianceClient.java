@@ -35,6 +35,7 @@ class ComplianceClient {
 
     /**
      * Returns the eligibility response from Compliance.
+     *
      * @throws ComplianceCallException on any I/O or HTTP error
      */
     EligibilityApiResponse checkEligibility(UUID personId, UUID asdId, boolean agonistic) {
@@ -54,10 +55,15 @@ class ComplianceClient {
         }
     }
 
-    /** Record mirrors the JSON shape of EligibilityResponse from compliance-service. */
-    record EligibilityApiResponse(boolean eligible, List<String> blockingDocuments, List<String> warnings) {}
+    /**
+     * Record mirrors the JSON shape of EligibilityResponse from compliance-service.
+     */
+    record EligibilityApiResponse(boolean eligible, List<String> blockingDocuments, List<String> warnings) {
+    }
 
     static final class ComplianceCallException extends RuntimeException {
-        ComplianceCallException(String msg) { super(msg); }
+        ComplianceCallException(String msg) {
+            super(msg);
+        }
     }
 }

@@ -40,14 +40,14 @@ public class UpdatePersonHandler {
             }
         }
 
-        if (cmd.nome() != null)      entity.setNome(cmd.nome());
-        if (cmd.cognome() != null)   entity.setCognome(cmd.cognome());
-        if (cmd.email() != null)     entity.setEmail(cmd.email());
-        if (cmd.telefono() != null)  entity.setTelefono(cmd.telefono());
+        if (cmd.nome() != null) entity.setNome(cmd.nome());
+        if (cmd.cognome() != null) entity.setCognome(cmd.cognome());
+        if (cmd.email() != null) entity.setEmail(cmd.email());
+        if (cmd.telefono() != null) entity.setTelefono(cmd.telefono());
         if (cmd.indirizzo() != null) entity.setIndirizzo(cmd.indirizzo());
-        if (cmd.citta() != null)     entity.setCitta(cmd.citta());
+        if (cmd.citta() != null) entity.setCitta(cmd.citta());
         if (cmd.provincia() != null) entity.setProvincia(cmd.provincia());
-        if (cmd.cap() != null)       entity.setCap(cmd.cap());
+        if (cmd.cap() != null) entity.setCap(cmd.cap());
 
         var saved = personRepository.save(entity);
         log.info("[UPDATE_PERSON] Updated personId={}", saved.getId());
